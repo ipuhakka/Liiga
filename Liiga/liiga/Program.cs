@@ -14,8 +14,8 @@ namespace Liiga
             db.setConnectionString("Data Source=db\\liiga.db; Version=3;");
             db.set_db_schema(@"db\liiga_schema_dump.sql");
             db.set_db_testdata(@"db\liiga_testdata_dump.sql");
-
-            List<string> teams = new List<string>();
+            db.ClearTables();
+            /*List<string> teams = new List<string>();
             teams.Add("Kärpät");
 
             List<Match> afterDate = db.SelectBeforeOrAfterDate(teams, "2017-01-01", true);
@@ -27,7 +27,7 @@ namespace Liiga
             results.Add(matchesBetween);
 
             List<Match> join = db.Join(results);
-            Console.WriteLine("Join count: " + join.Count);
+            Console.WriteLine("Join count: " + join.Count); */
             Console.WriteLine("OK");
             Console.ReadLine();
         }

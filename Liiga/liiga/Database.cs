@@ -484,7 +484,6 @@ namespace Liiga
                 throw new DateConversionError();
             }
 
-            Console.WriteLine(select);
             SQLiteConnection con = new SQLiteConnection(connectionString);
             con.Open();
 

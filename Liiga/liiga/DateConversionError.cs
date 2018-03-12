@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Liiga
 {
-    class DateConversionError: System.Exception
+    public class DateConversionError: System.Exception
     {
     }
 }
