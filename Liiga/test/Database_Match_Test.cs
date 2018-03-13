@@ -360,7 +360,9 @@ namespace Liiga
               Select where hometeam tps
               Select where gd >= 2. Should return 1*/
             db.FillTables();
-            List<Match> season = db.SelectFromSeason("16-17");
+            List<string> seasons = new List<string>();
+            seasons.Add("16-17");
+            List<Match> season = db.SelectFromSeason(seasons);
             List<string> teams = new List<string>();
             teams.Add("TPS");
             List<Match> home = db.SelectWhereHometeam(teams);
@@ -563,7 +565,9 @@ namespace Liiga
             /*Select where season 17-18, should return 9.
              Join with playoffs, should return 2.*/
             db.FillTables();
-            List<Match> season = db.SelectFromSeason("17-18");
+            List<string> seasons = new List<string>();
+            seasons.Add("17-18");
+            List<Match> season = db.SelectFromSeason(seasons);
             List<Match> playoffs = db.SelectWherePlayoff(true);
 
             List<List<Match>> join = new List<List<Match>>();

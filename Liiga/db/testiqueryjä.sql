@@ -21,3 +21,11 @@ SELECT count(1) FROM matches WHERE hometeam='Kärpät' and awayteam='Tappara' an
 select * from matches where (played_date >= '2017-03-26'); //
 
 select * from matches where hometeam='HIFK' or awayteam='HIFK' order by played_date limit 1;
+
+select * from matches where hometeam='Kärpät'
+join 
+select * from matches where awayteam='Tappara';
+
+select * from matches where (season='16-17') and (hometeam='Kärpät' or awayteam='Kärpät');
+
+select * from matches where (season='16-17') and ((hometeam='Kärpät' or hometeam='Tappara') and  (awayteam='Kärpät' or awayteam='Tappara'));

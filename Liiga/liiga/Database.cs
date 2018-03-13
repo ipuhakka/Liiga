@@ -140,7 +140,6 @@ namespace Liiga
 
         }
 
-
         /// <summary>Selects all found matches between parameter teams</summary>
         /// <param name="teams">A list of team names that are looked for.</param>
         /// <returns>List of Match-objects on success, null if teams parameter is an empty list. </returns>
@@ -210,12 +209,22 @@ namespace Liiga
         }
 
         /// <summary>Selects all matches from a certain season</summary>
-        /// <param name="season">Season to search for. Format yy-yy</param>
-        /// <returns>List of matches from the parameter season.</returns>
+        /// <param name="seasons">List of seasons where matches are searched for.</param>
+        /// <returns>List of matches from parameter seasons.</returns>
         /// 
-        public List<Match> SelectFromSeason(string season)
+        public List<Match> SelectFromSeason(List<string> seasons)
         {
-            return QueryMatches(String.Format("SELECT * FROM matches WHERE season='{0}';", season));
+            string query = "SELECT * FROM matches WHERE ";
+
+            for (int i = 0; i < seasons.Count; i++)
+            {
+                query = query + String.Format("season='{0}' ", seasons[i]);
+
+                if (i < seasons.Count - 1)
+                    query = query + "OR ";
+            }
+
+            return QueryMatches(query + ";");
         }
 
         /// <summary>Selects matches between parameter teams from selected seasons.</summary>
