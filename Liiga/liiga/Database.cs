@@ -122,6 +122,15 @@ namespace Liiga
             Query(sql);
         }
 
+        /// <summary>
+        /// Gets all matches in the database
+        /// </summary>
+        /// <returns>A list of Match objects that are found.</returns>
+        public List<Match> SelectAllMatches()
+        {
+            return QueryMatches("SELECT * FROM matches;");
+        }
+
         /// <summary>Select n last matches from a team.</summary>
         /// <param name="n">Number of last matches to get.</param>
         /// <param name="team">Name of the team to be searched for.</param>
@@ -212,7 +221,7 @@ namespace Liiga
         /// <param name="seasons">List of seasons where matches are searched for.</param>
         /// <returns>List of matches from parameter seasons.</returns>
         /// 
-        public List<Match> SelectFromSeason(List<string> seasons)
+        public List<Match> SelectFromSeasons(List<string> seasons)
         {
             string query = "SELECT * FROM matches WHERE ";
 
@@ -452,6 +461,51 @@ namespace Liiga
 
             return matches;
         }
+
+        /// <summary>
+        /// Selects all different seasons from the database.
+        /// </summary>
+        /// <returns>A list of strings containing all seasons from which database
+        /// has matches.</returns>
+        public List<string> GetSeasons()
+        {
+            return QueryString("SELECT DISTINCT season FROM matches;");
+        }
+
+        /// <summary>
+        /// Returns all teamnames that are in the database.
+        /// </summary>
+        /// <returns>A list of strings containing all names of teams in database.</returns>
+        public List<string> GetTeamnames()
+        {
+            return QueryString("SELECT hometeam FROM matches WHERE hometeam IS NOT NULL UNION SELECT awayteam FROM matches WHERE awayteam IS NOT NULL; ");
+        }
+
+        /// <summary>
+        /// Returns list of strings based on the query. Can be used  to get distinct teams and seasons.
+        /// </summary>
+        /// <returns>A list of strings containing all different strings in database based on 
+        /// the search.</returns>
+        public List<string> QueryString(string query)
+        {
+            List<string> results = new List<string>();
+
+            SQLiteConnection con = new SQLiteConnection(connectionString);
+            con.Open();
+
+            SQLiteCommand command = new SQLiteCommand(query, con);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                results.Add(reader.GetString(0));
+            }
+
+            con.Close();
+
+            return results;
+        }
+
 
         /// <summary> Select a list of playoff or regular season matches.</summary>
         /// <param name="playoff">True indicates that function searches playoff matches, false

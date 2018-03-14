@@ -362,7 +362,7 @@ namespace Liiga
             db.FillTables();
             List<string> seasons = new List<string>();
             seasons.Add("16-17");
-            List<Match> season = db.SelectFromSeason(seasons);
+            List<Match> season = db.SelectFromSeasons(seasons);
             List<string> teams = new List<string>();
             teams.Add("TPS");
             List<Match> home = db.SelectWhereHometeam(teams);
@@ -567,7 +567,7 @@ namespace Liiga
             db.FillTables();
             List<string> seasons = new List<string>();
             seasons.Add("17-18");
-            List<Match> season = db.SelectFromSeason(seasons);
+            List<Match> season = db.SelectFromSeasons(seasons);
             List<Match> playoffs = db.SelectWherePlayoff(true);
 
             List<List<Match>> join = new List<List<Match>>();
@@ -579,6 +579,51 @@ namespace Liiga
 
             Assert.AreEqual(9, season.Count);
             Assert.AreEqual(2, results.Count);
+            db.ClearTables();
+        }
+
+        [Test]
+        public void test_SelectSeasons()
+        {
+            /* getSeasons returns all different season from which there are matches in the database.*/
+            db.FillTables();
+
+            List<string> results = db.GetSeasons();
+
+            Assert.AreEqual(2, results.Count);
+
+            foreach (string s in results)
+                Console.WriteLine(s);
+
+            db.ClearTables();
+        }
+
+        [Test]
+        public void test_SelectAllMatches()
+        {
+            List<Match> results = db.SelectAllMatches();
+            Assert.AreEqual(0, results.Count);
+
+            db.FillTables();
+            results = db.SelectAllMatches();
+            Assert.AreEqual(18, results.Count);
+
+            db.ClearTables();
+        }
+
+        [Test]
+        public void test_GetTeamnames()
+        {
+            /* getTeamnames returns all teams whose matches are in database.
+             Database needs to be cleared of any existing data before first call.*/
+            db.ClearTables();
+            List<string> res = db.GetTeamnames();
+            Assert.AreEqual(0, res.Count);
+
+            db.FillTables();
+            res = db.GetTeamnames();
+            Assert.AreEqual(10, res.Count);
+
             db.ClearTables();
         }
     }

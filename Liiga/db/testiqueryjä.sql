@@ -29,3 +29,12 @@ select * from matches where awayteam='Tappara';
 select * from matches where (season='16-17') and (hometeam='Kärpät' or awayteam='Kärpät');
 
 select * from matches where (season='16-17') and ((hometeam='Kärpät' or hometeam='Tappara') and  (awayteam='Kärpät' or awayteam='Tappara'));
+
+
+SELECT hometeam
+FROM matches
+WHERE hometeam IS NOT NULL
+UNION
+SELECT awayteam
+FROM matches
+WHERE awayteam IS NOT NULL;

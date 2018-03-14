@@ -13,21 +13,30 @@ namespace Liiga
             Database db = new Database();
             db.setConnectionString("Data Source=db\\liiga.db; Version=3;");
             db.set_db_schema(@"db\liiga_schema_dump.sql");
-            db.set_db_testdata(@"db\liiga_testdata_dump.sql");
-            db.ClearTables();
-            /*List<string> teams = new List<string>();
+            //db.set_db_testdata(@"db\liiga_testdata_dump.sql");
+            List<string> teams = new List<string>();
             teams.Add("Kärpät");
-
-            List<Match> afterDate = db.SelectBeforeOrAfterDate(teams, "2017-01-01", true);
+            teams.Add("Tappara");
+            teams.Add("JYP");
             teams.Add("TPS");
-            List<Match> matchesBetween = db.SelectBetweenTeams(teams);
 
-            List<List<Match>> results = new List<List<Match>>();
-            results.Add(afterDate);
-            results.Add(matchesBetween);
+            List<string> seasons = new List<string>();
+            seasons.Add("17-18");
 
-            List<Match> join = db.Join(results);
-            Console.WriteLine("Join count: " + join.Count); */
+            List<Match> results = db.SelectBetweenTeamsFromSeasons(teams, seasons);
+
+            foreach(Match m in results)
+            {
+                string ot = "";
+
+                if (m.overtime)
+                    ot = "Overtime";
+
+                Console.WriteLine(String.Format("{0} - {1} {2} - {3} {4}", m.hometeam, m.awayteam, m.homescore, m.awayscore, ot));
+
+
+            }
+
             Console.WriteLine("OK");
             Console.ReadLine();
         }
