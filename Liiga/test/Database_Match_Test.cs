@@ -583,7 +583,7 @@ namespace Liiga
         }
 
         [Test]
-        public void test_SelectSeasons()
+        public void test_GetSeasons()
         {
             /* getSeasons returns all different season from which there are matches in the database.*/
             db.FillTables();
