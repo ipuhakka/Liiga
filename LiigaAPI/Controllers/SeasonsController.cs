@@ -21,12 +21,13 @@ namespace LiigaAPI.Controllers
 
             string json = seasons.getSeasons();
             var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
             response.Content = new StringContent(json, System.Text.Encoding.GetEncoding("iso-8859-1"),"application/json");
             return response;
         }
 
         // GET: api/Seasons/5
-        public string Get(int id)
+       /* public string Get(int id)
         {
             return "value";
         }
@@ -44,6 +45,6 @@ namespace LiigaAPI.Controllers
         // DELETE: api/Seasons/5
         public void Delete(int id)
         {
-        }
+        } */
     }
 }

@@ -1,0 +1,8 @@
+{
+  "name": "LiigaAPI-client",
+  "version": "0.0.1",
+  "description": "Client for using Liiga database",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

@@ -528,8 +528,9 @@ namespace Liiga
         /// "yyyy-MM-dd".</param>
         /// <param name="season">string description of which season the match was played.</param>
         /// <returns>1 on successful creation, -1 if match already exists in the database.</returns>
-        /// <exception cref="DateConversionError">Thrown when date cannot be converted
+        /// <exception cref="DateConversionError">Thrown when date cannot be converted.
         /// into format "yyyy-MM-dd".</exception>
+        /// <exception cref="SQLiteException">Thrown when executing command throws an error.</exception>
         public int CreateMatchRow(string home, string away, int homescore, int awayscore, bool ot, string date, bool playoff, string season)
         {
             /* creates a new row to matches table. First checks if the match already exists in the database. */
@@ -551,24 +552,32 @@ namespace Liiga
             con.Open();
 
             SQLiteCommand command = new SQLiteCommand(select, con);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                exists = Convert.ToInt32(reader.GetInt32(0));
+                SQLiteDataReader reader = command.ExecuteReader();
+            
+                while (reader.Read())
+                {
+                    exists = Convert.ToInt32(reader.GetInt32(0));
+                }
+                if (exists == 1)
+                {
+                    con.Close();
+                    return -1;
+                }
+                else
+                {
+                    string insert = String.Format("INSERT INTO matches VALUES('{0}', '{1}', {2}, {3}, {4}, '{5}', {6}, '{7}');",
+                        home, away, homescore, awayscore, Convert.ToInt32(ot), date, Convert.ToInt32(playoff), season);
+
+                    Query(insert);
+                    return 1;
+                }
             }
-            if (exists == 1)
+            catch (SQLiteException e)
             {
                 con.Close();
-                return -1;
-            }
-            else
-            {
-                string insert = String.Format("INSERT INTO matches VALUES('{0}', '{1}', {2}, {3}, {4}, '{5}', {6}, '{7}');",
-                    home, away, homescore, awayscore, Convert.ToInt32(ot), date, Convert.ToInt32(playoff), season);
-
-                Query(insert);
-                return 1;
+                throw e;
             }
 
         }

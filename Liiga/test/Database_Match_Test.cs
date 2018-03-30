@@ -111,6 +111,18 @@ namespace Liiga
         }
 
         [Test]
+        public void test_CreateMatchRow_Wrong_ConnectionString()
+        {
+            /* by setting the connection string to a non existing one*/
+            Database database = new Database();
+            database.setConnectionString(@"Data Source=C:\Users\iirop\Documents\Visual Studio 2015\Projects\Liiga\Liiga\db\liigaTest2.db;Version=3");
+            Assert.Throws<System.Data.SQLite.SQLiteException>(() => database.CreateMatchRow("Kärpät", "Tappara", 3, 1, false, "2018-03-09", true, "18-19"));
+
+            if (System.IO.File.Exists(@"C:\Users\iirop\Documents\Visual Studio 2015\Projects\Liiga\Liiga\db\liigaTest2.db"))
+                File.Delete(@"C:\Users\iirop\Documents\Visual Studio 2015\Projects\Liiga\Liiga\db\liigaTest2.db");
+         }
+
+        [Test]
         public void test_SelectBetweenTeams()
         {
             /* Test with test data , kärpät, tps and tappara. Function should
@@ -626,5 +638,6 @@ namespace Liiga
 
             db.ClearTables();
         }
+
     }
 }
