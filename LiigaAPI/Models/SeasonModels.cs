@@ -24,8 +24,6 @@ namespace LiigaAPI.Models
             Database db = new Database();
             db.setConnectionString("Data Source = db\\liiga.db; Version = 3;");
 
-            Console.WriteLine(Directory.GetCurrentDirectory());
-
             List<string> seasons = db.GetSeasons();
 
             return JsonConvert.SerializeObject(seasons);

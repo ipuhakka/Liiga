@@ -2,6 +2,9 @@
 
 const SEASONS_KEY = "SEASONS_KEY";
 const SEASONS_URL = "http://localhost:51678/api/seasons";
+const TEAMS_KEY = "TEAMS_KEY";
+const TEAMS_URL = "http://localhost:51678/api/teams";
+
 
 /*
 This function creates a http GET-request to http://hostURI/api/seasons. 
@@ -17,6 +20,7 @@ function getSeasons() {
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
                 console.log(xmlHttp.responseText);
+                sessionStorage.setItem(SEASONS_KEY, xmlHttp.responseText);
             }
             if (xmlHttp.status !== 200) {
                 console.log("Error happened, "+ xmlHttp.status);
@@ -24,12 +28,38 @@ function getSeasons() {
 
         }
 
-        xmlHttp.withCredentials = false;
         xmlHttp.send();
     }
 
 }
 
+/*
+This function creates a http GET-request to http://hostURI/api/teams. 
+On success, the data received is stored into sessionStorage. 
+*/
+function getTeams(){
+	
+	var xmlHttp = createCORSRequest("GET", TEAMS_URL);
+
+    if (xmlHttp) {
+
+        xmlHttp.onreadystatechange = function () {
+
+            if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
+                console.log(xmlHttp.responseText);
+                sessionStorage.setItem(TEAMS_KEY, xmlHttp.responseText);
+            }
+            if (xmlHttp.status !== 200) {
+                console.log("Error happened, "+ xmlHttp.status);
+            }
+
+        }
+
+        xmlHttp.send();
+    }
+	
+}
+	
 function createCORSRequest(method, url) {
     var xhr = new XMLHttpRequest();
     if ("withCredentials" in xhr) {

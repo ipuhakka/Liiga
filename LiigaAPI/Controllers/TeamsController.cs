@@ -8,39 +8,36 @@ using LiigaAPI.Models;
 
 namespace LiigaAPI.Controllers
 {
-    public class SeasonsController : ApiController
+    public class TeamsController : ApiController
     {
-        // GET: api/Seasons
+        // GET: api/Teams
         public HttpResponseMessage Get()
         {
-            /* Get json representation of list of seasons, create response with OK status, 
-             set content and return response.*/
-            SeasonModels seasons = new SeasonModels();
+            TeamsModels obj = new TeamsModels();
 
-            string json = seasons.getSeasons();
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Access-Control-Allow-Origin", "*");
-            response.Content = new StringContent(json, System.Text.Encoding.GetEncoding("iso-8859-1"),"application/json");
+            response.Content = new StringContent(obj.getTeams(), System.Text.Encoding.GetEncoding("iso-8859-1"), "application/json");
             return response;
         }
 
-        // GET: api/Seasons/5
+        // GET: api/Teams/5
        /* public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Seasons
+        // POST: api/Teams
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT: api/Seasons/5
+        // PUT: api/Teams/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/Seasons/5
+        // DELETE: api/Teams/5
         public void Delete(int id)
         {
         } */
