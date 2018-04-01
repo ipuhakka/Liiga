@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace LiigaAPI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MatchesController : ApiController
     {
         // GET: api/matches?parameter1=value1&param2=value2..
@@ -19,6 +18,7 @@ namespace LiigaAPI.Controllers
             MatchesModels model = new MatchesModels();
             string json = JsonConvert.SerializeObject(model.getmatches(between, seasons, teams, goal_difference, GD_is_at_least, playoff, played_at_home, match_end_in_overtime));
             var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
             response.Content = new StringContent(json, System.Text.Encoding.GetEncoding("iso-8859-1"), "application/json");
             return response;
         }
