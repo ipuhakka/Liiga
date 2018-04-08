@@ -5,7 +5,43 @@
     <meta charset="utf-8" />
     <title>Liiga Data Client</title>
 </head>
+<link rel="stylesheet" type="text/css" href="css/styles.css" />
 <body onload="main()">
+	<div class="selectorHeader">
+		<text>Match type: </text>
+	</div>
+	<div id="match_type_selector" class="searchSelectorSwitch" id="match_type">
+		<button id="match_type_all" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All match types</button>
+		<button id="match_type_reqular" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular season</button>
+		<button id="match_type_playoff" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Playoff</button>
+	</div>
+	<div class="selectorHeader">
+		<text>Match venue: </text>
+	</div>
+	<div id="match_venue_selector" class="searchSelectorSwitch" id="match_type">
+		<button id="match_venue_all" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All venues</button>
+		<button id="match_venue_home" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Home games</button>
+		<button id="match_venue_away" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Away games</button>
+	</div>
+	<div class="selectorHeader">
+		<text>Goal difference: </text>
+	</div>
+	<div id="match_gd_selector" class="searchSelectorSwitch" id="match_type">
+		<button id="match_gd_none" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
+		<button id="match_gd_at_least" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at least</button>
+		<button id="match_gd_at_most" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at most</button>
+	</div>
+	<form>
+		<input type="text" class="gd_form"> goals
+	</form>
+	<div class="selectorHeader">
+		<text>Match end: </text>
+	</div>
+	<div id="match_end_selector" class="searchSelectorSwitch" id="match_type">
+		<button id="match_end_all" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
+		<button id="match_end_overtime" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Overtime</button>
+		<button id="match_end_regular_time" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular time</button>
+	</div>
     <script src="js/api_calls.js"></script>
 	<script src="js/main.js"></script>
     <script>
