@@ -24,3 +24,40 @@ function pressedSelector(button){
 		}
 	}
 }
+
+
+/*Selects or deselects pressed element. Pressed element contains a text element with textContent.
+
+  Gets children elements of clicked div, checks if sessionStorage contains
+  data for item_type, checks if sessionStorage contains selected item, 
+  and either deselects item or selects it. SessionStorage is updated with new array.
+ */
+function itemSelected(element, item_type){
+	
+	var children = element.children;
+	
+	var items = JSON.parse(sessionStorage.getItem(item_type));
+
+	if (items == null){
+		items = [];
+	}
+	
+	if (children.length > 0){
+		text = children[0].textContent;
+		for (var i = 0; i < items.length; i++){
+			if (items[i] == text) //deselect
+			{
+				items.splice(i, 1);
+				sessionStorage.setItem(item_type, JSON.stringify(items));
+				console.log(sessionStorage.getItem(item_type));
+				element.style.backgroundColor = "white";
+				return;
+			}
+		}
+		items.push(text);
+		element.style.backgroundColor = "#4156f4";
+		sessionStorage.setItem(item_type, JSON.stringify(items));
+		console.log(sessionStorage.getItem(item_type));
+	}
+			
+}

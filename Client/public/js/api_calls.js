@@ -4,8 +4,8 @@ const BASE_URL = "http://localhost:51678/"
 const SEASONS_URL = "api/seasons";
 const TEAMS_URL = "api/teams";
 
-const TEAMS_KEY = "TEAMS_KEY";
-const SEASONS_KEY = "SEASONS_KEY";
+const TEAMS_KEY = "DB_TEAMS";
+const SEASONS_KEY = "DB_SEASONS";
 
 
 /*
