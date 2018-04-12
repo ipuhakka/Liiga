@@ -61,3 +61,42 @@ function itemSelected(element, item_type){
 	}
 			
 }
+
+
+function search(){
+	console.log("you clicked me!");
+}
+
+/*
+Function is used to assign a value for a search parameter. 
+Function checks which index has class switchButtonSelected assigned to it.
+if 2, return null,
+if 1, return true,
+if 0, return false.
+*/
+function findParameterValue(element_id){
+	
+	var element = document.getElementById(element_id);
+	
+	var children = element.children;
+	var index = 0;
+	
+	for (var i = 0; i < children.length; i++){
+		if (children[i].classList.contains(switchButtonSelected)){
+			index = i;
+			break;
+		}
+	}
+	
+	if (index === 2)
+		return null;
+	
+	if (index === 1)
+		return true;
+	
+	if (index === 0)
+		return false;
+		
+	
+} 
+
