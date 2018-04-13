@@ -4,15 +4,12 @@ const BASE_URL = "http://localhost:51678/"
 const SEASONS_URL = "api/seasons";
 const TEAMS_URL = "api/teams";
 
-const TEAMS_KEY = "DB_TEAMS";
-const SEASONS_KEY = "DB_SEASONS";
-
 
 /*
 This function creates a http GET-request to http://hostURI/api/seasons. 
 On success, the data received is stored into sessionStorage. 
 */
-function getSeasons() {
+function getSeasons(callback, param1, param2) {
 
     var xmlHttp = createCORSRequest("GET", BASE_URL + SEASONS_URL);
 
@@ -21,8 +18,7 @@ function getSeasons() {
         xmlHttp.onreadystatechange = function () {
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
-                sessionStorage.setItem(SEASONS_KEY, xmlHttp.responseText);
+                callback(JSON.parse(xmlHttp.responseText), param1, param2);
             }
             if (xmlHttp.status !== 200) {
                 console.log("Error happened, "+ xmlHttp.status);
@@ -39,7 +35,7 @@ function getSeasons() {
 This function creates a http GET-request to http://hostURI/api/teams. 
 On success, the data received is stored into sessionStorage. 
 */
-function getTeams(){
+function getTeams(callback, param1, param2){
 	
 	var xmlHttp = createCORSRequest("GET", BASE_URL + TEAMS_URL);
 
@@ -48,8 +44,7 @@ function getTeams(){
         xmlHttp.onreadystatechange = function () {
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
-                sessionStorage.setItem(TEAMS_KEY, xmlHttp.responseText);
+                callback(JSON.parse(xmlHttp.responseText), param1, param2);
             }
             if (xmlHttp.status !== 200) {
                 console.log("Error happened, "+ xmlHttp.status);
@@ -93,7 +88,7 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
         xmlHttp.onreadystatechange = function () {
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
+				console.log(xmlHttp.responseText);
                 return xmlHttp.responseText;
             }
             if (xmlHttp.status !== 200) {

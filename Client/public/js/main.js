@@ -1,12 +1,26 @@
 //javascript source code file
 function main() {
-    /*getSeasons();
-    getTeams();
-	teams = [];
-	teams.push("Kärpät");
-	teams.push("Tappara");
+	sessionStorage.setItem('team', null);
+	sessionStorage.setItem('season', null);
+	getSeasons(addSelectItemsToUI, "seasonDiv", "season");
+	getTeams(addSelectItemsToUI, "teamDiv", "team");
+}
+
+function addSelectItemsToUI(element_array, parent_id, item_type){
 	
-	getMatches(true, 1, false, null, null, null, teams, null); */
+	var parentDiv = document.getElementById(parent_id);
+	
+	for (var i = 0; i < element_array.length; i++){
+		var div = document.createElement('div');
+		div.classList.add("selectItem");
+		div.onclick = function(){itemSelected(this, item_type);}
+		var textElement = document.createElement('text');
+		textElement.textContent = element_array[i];
+		
+		div.appendChild(textElement);
+		parentDiv.appendChild(div);
+	}
+	
 }
 
 /* click method for all switchButton-elements. Pressed button is selected. Sibling buttons are updated to notSelected.*/
@@ -62,9 +76,30 @@ function itemSelected(element, item_type){
 			
 }
 
-
+/*
+Get search parameters, and use getMatches from api_calls.js.
+*/
 function search(){
-	console.log("you clicked me!");
+		
+	gd_is_at_least = findParameterValue("match_gd_selector");	
+	goal_difference = parseInt(document.getElementById("goal_difference").value);
+	
+	if (gd_is_at_least !== null){		
+		if (!Number.isInteger(goal_difference)){	
+			window.alert("Please input goal difference as a number");
+			return;
+		}
+	}
+	
+	between = findParameterValue("matches_against_selector");
+	playoff = findParameterValue("match_type_selector");
+	played_at_home = findParameterValue("match_venue_selector");
+	end_in_overtime = findParameterValue("match_end_selector");
+	
+	teams = JSON.parse(sessionStorage.getItem('team'));
+	seasons = JSON.parse(sessionStorage.getItem('season'));
+	
+	getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons);
 }
 
 /*
@@ -82,21 +117,19 @@ function findParameterValue(element_id){
 	var index = 0;
 	
 	for (var i = 0; i < children.length; i++){
-		if (children[i].classList.contains(switchButtonSelected)){
-			index = i;
-			break;
+		if (children[i].classList.contains("switchButtonSelected")){
+			value = children[i].value;
+			
+			if (value === "null")
+				return null;
+			
+			if (value === "false")
+				return false;
+			
+			if (value === "true")
+				return true;
 		}
 	}
-	
-	if (index === 2)
-		return null;
-	
-	if (index === 1)
-		return true;
-	
-	if (index === 0)
-		return false;
-		
-	
+			
 } 
 
