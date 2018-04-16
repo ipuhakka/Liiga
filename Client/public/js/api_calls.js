@@ -1,8 +1,9 @@
 // JavaScript source code for Liiga-API client program.
 
-const BASE_URL = "http://localhost:51678/"
-const SEASONS_URL = "api/seasons";
-const TEAMS_URL = "api/teams";
+const BASE_URL = "http://localhost:51678/";
+//const BASE_URL = "http://31c2ff09.ngrok.io/";
+const SEASONS_URL = "api/seasons/";
+const TEAMS_URL = "api/teams/";
 
 
 /*
@@ -25,7 +26,7 @@ function getSeasons(callback, param1, param2) {
             }
 
         }
-
+		xmlHttp.withCredentials = false;
         xmlHttp.send();
     }
 
@@ -51,7 +52,7 @@ function getTeams(callback, param1, param2){
             }
 
         }
-
+		xmlHttp.withCredentials = false;
         xmlHttp.send();
     }
 	
@@ -90,7 +91,7 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
         xmlHttp.onreadystatechange = function () {
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
-				console.log(xmlHttp.responseText);
+				console.log("Data received from server");
 				sessionStorage.setItem('matchData', xmlHttp.responseText);
                 callback('date');
             }
@@ -154,7 +155,7 @@ function createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, p
 	}
 	
 	if (seasons != null){
-		for (var i = 0; i < teams.length; i++){
+		for (var i = 0; i < seasons.length; i++){
 			url = url + "&seasons=" + seasons[i];
 		}
 	}

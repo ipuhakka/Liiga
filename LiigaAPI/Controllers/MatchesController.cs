@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace LiigaAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MatchesController : ApiController
     {
         // GET: api/matches?parameter1=value1&param2=value2..

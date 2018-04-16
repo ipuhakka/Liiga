@@ -46,7 +46,6 @@ function itemSelected(element, item_type){
 			{
 				items.splice(i, 1);
 				sessionStorage.setItem(item_type, JSON.stringify(items));
-				console.log(sessionStorage.getItem(item_type));
 				element.style.backgroundColor = "white";
 				return;
 			}
@@ -54,7 +53,6 @@ function itemSelected(element, item_type){
 		items.push(text);
 		element.style.backgroundColor = "#4156f4";
 		sessionStorage.setItem(item_type, JSON.stringify(items));
-		console.log(sessionStorage.getItem(item_type));
 	}
 			
 }
@@ -118,16 +116,42 @@ function findParameterValue(element_id){
 
 function sortByParam(param, data) {
 
+	if (param === 'date')
+		return sortByDate(data);
+
 	return sortData(data, param);
 
 }
 
+/* General sorting for sorting without tiebreakers.*/
 function sortData(data, param)
 {
-
     return data.sort(function (a, b) {
 		return b[param] - a[param];
     });
+}
 
+
+function sortByDate(data){
+	
+	/*Return year if there is a difference, return month if there's a difference, 
+	and finally return day*/
+	return data.sort(function (a, b) {
+		aSplitted =	a['date'].split('-');
+		bSplitted = b['date'].split('-');
+		var year = bSplitted[0] - aSplitted[0];
+		
+		if (year !== 0)
+			return year;
+		
+		var month = bSplitted[1] - aSplitted[1];
+		
+		if (month !== 0)
+			return month;
+		
+		return bSplitted[2] - aSplitted[2];
+		
+    }); 
+	
 }
 

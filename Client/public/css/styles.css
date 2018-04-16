@@ -5,20 +5,18 @@ table, th
     background: #dbf302;
 }
 
-td{
-	text-align:center;
+tr{
+	text-align:left;
 }
 
 tr:nth-child(even) td
 {
     background:#fff;
-    border: 1px solid black;
 }
 
 tr:nth-child(odd) td
 {    
     background: #dbf302;
-    border: 1px solid black;
 }
 
 .mainDiv{
