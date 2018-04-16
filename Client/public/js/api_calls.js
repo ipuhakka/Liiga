@@ -74,8 +74,10 @@ params:
 		
 	teams: Array of string teamnames that are searched for.
 	seasons = Array of string seasons from which matches are searched for. 
+	
+	callback is displayMatches, which sets the UI to show search results.
 */
-function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons){
+function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons, callback){
 	
 	var url = createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons);
 	
@@ -89,7 +91,8 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
 
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
 				console.log(xmlHttp.responseText);
-                return xmlHttp.responseText;
+				sessionStorage.setItem('matchData', xmlHttp.responseText);
+                callback('date');
             }
             if (xmlHttp.status !== 200) {
                 console.log("Error happened, "+ xmlHttp.status);

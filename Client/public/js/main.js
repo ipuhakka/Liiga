@@ -6,23 +6,6 @@ function main() {
 	getTeams(addSelectItemsToUI, "teamDiv", "team");
 }
 
-function addSelectItemsToUI(element_array, parent_id, item_type){
-	
-	var parentDiv = document.getElementById(parent_id);
-	
-	for (var i = 0; i < element_array.length; i++){
-		var div = document.createElement('div');
-		div.classList.add("selectItem");
-		div.onclick = function(){itemSelected(this, item_type);}
-		var textElement = document.createElement('text');
-		textElement.textContent = element_array[i];
-		
-		div.appendChild(textElement);
-		parentDiv.appendChild(div);
-	}
-	
-}
-
 /* click method for all switchButton-elements. Pressed button is selected. Sibling buttons are updated to notSelected.*/
 function pressedSelector(button){
 
@@ -99,7 +82,7 @@ function search(){
 	teams = JSON.parse(sessionStorage.getItem('team'));
 	seasons = JSON.parse(sessionStorage.getItem('season'));
 	
-	getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons);
+	getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons, displayMatches);
 }
 
 /*
@@ -132,4 +115,19 @@ function findParameterValue(element_id){
 	}
 			
 } 
+
+function sortByParam(param, data) {
+
+	return sortData(data, param);
+
+}
+
+function sortData(data, param)
+{
+
+    return data.sort(function (a, b) {
+		return b[param] - a[param];
+    });
+
+}
 
