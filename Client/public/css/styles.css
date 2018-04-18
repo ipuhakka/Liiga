@@ -19,6 +19,11 @@ tr:nth-child(odd) td
     background: #dbf302;
 }
 
+.tableDiv{
+	height:300px;
+	overflow-y: scroll;
+}
+
 .mainDiv{
 	width:50%;
 	min-height:600px;

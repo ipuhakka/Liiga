@@ -62,7 +62,23 @@
 	</div>
 </div>
 <div class=mainDiv id="resultsDiv" style="float:right;">
-	<div id="matchesDiv">
+	<div id="leagueTableDiv" class="tableDiv" style="margin-top:5px;">
+		<table id="leagueTable">
+            <tr>
+                <th>Team</th>
+				<th onclick="displayLeagueTable('matches')">Played</th>
+                <th onclick="displayLeagueTable('won')">Won</th>
+                <th onclick="displayLeagueTable('otWins')">2 p.</th>
+                <th onclick="displayLeagueTable('otLosses')">1 p.</th>
+				<th onclick="displayLeagueTable('lost')">Lost</th>
+				<th onclick="displayLeagueTable('goals')">Scored</th>
+				<th onclick="displayLeagueTable('against')">Against</th>
+				<th onclick="displayLeagueTable('points')">Points</th>
+				<th onclick="displayLeagueTable('pointsPerGame')">PPG</th>
+            </tr>
+		</table>
+	</div>
+	<div id="matchesDiv" class="tableDiv">
 		<table id="matchesTable">
             <tr>
                 <th>Hometeam</th>

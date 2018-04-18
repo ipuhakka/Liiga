@@ -1,7 +1,7 @@
 // JavaScript source code for Liiga-API client program.
 
-const BASE_URL = "http://localhost:51678/";
-//const BASE_URL = "http://31c2ff09.ngrok.io/";
+//const BASE_URL = "http://localhost:51678/";
+const BASE_URL = "http://9cf7d2f2.ngrok.io/";
 const SEASONS_URL = "api/seasons/";
 const TEAMS_URL = "api/teams/";
 
@@ -78,9 +78,9 @@ params:
 	
 	callback is displayMatches, which sets the UI to show search results.
 */
-function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons, callback){
+function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons, callback){
 	
-	var url = createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons);
+	var url = createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons);
 	
 	console.log(url);
 	
@@ -130,7 +130,7 @@ function createCORSRequest(method, url) {
     return xhr;
 }
 
-function createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, end_in_overtime, teams, seasons){
+function createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons){
 	
 	var url = BASE_URL + "api/matches?between=" + String(between);
 	
@@ -143,8 +143,8 @@ function createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, p
 	if (played_at_home != null)
 		url = url + "&played_at_home=" + String(played_at_home);
 	
-	if (end_in_overtime != null)
-		url = url + "&end_in_overtime=" + String(end_in_overtime);
+	if (match_end_in_overtime != null)
+		url = url + "&match_end_in_overtime=" + String(match_end_in_overtime);
 	
 	if (teams != null){
 	
