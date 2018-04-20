@@ -16,7 +16,8 @@ namespace Liiga
         [OneTimeSetUp]
         public void setUpTests()
         {
-            /* setUp class sets Database variables and sets the path to the correct directory. */
+            /* setUp class sets Database variables and sets the path to the correct directory. 
+             Current directory can for some reason be the wrong one so it needs to be set.*/
             Directory.SetCurrentDirectory(@"C:\Users\iirop\Documents\Visual Studio 2015\Projects\Liiga\Liiga");
             db.CreateDatabase(@"db\liigaTest.db");
             db.setConnectionString("Data Source=db\\liigaTest.db; Version=3;");

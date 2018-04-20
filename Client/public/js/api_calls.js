@@ -1,7 +1,7 @@
 // JavaScript source code for Liiga-API client program.
 
-//const BASE_URL = "http://localhost:51678/";
-const BASE_URL = "http://9cf7d2f2.ngrok.io/";
+const BASE_URL = "http://localhost:51678/";
+//const BASE_URL = "http://f0e1cba6.ngrok.io/";
 const SEASONS_URL = "api/seasons/";
 const TEAMS_URL = "api/teams/";
 
