@@ -184,8 +184,15 @@ Each match is processed, teams added to teams array, and then points per game is
 function createLeagueTable(){
 	
 	matches = JSON.parse(sessionStorage.getItem('matchData'));
+	onlyHomeMatches = sessionStorage.getItem("USE_HOME_GAMES_ONLY"); //this is null when using all types, true when using home games and false when using away games.
+	if (onlyHomeMatches !== "null"){
+		onlyHomeMatches = (onlyHomeMatches === "true"); //get value from string that is stored in sessionStorage
+	}
+	else
+		onlyHomeMatches = null;
 	
 	var teams = [];
+	
 	
 	//go through each match
 	for (var i = 0; i < matches.length; i++){
@@ -195,22 +202,22 @@ function createLeagueTable(){
 		
 		//go through each team in array
 		for (var j = 0; j < teams.length; j++){
-			if (teams[j].name === matches[i].hometeam){ //home team already in array
+			if (teams[j].name === matches[i].hometeam && onlyHomeMatches !== false){ //home team already in array
 				teams = appendHometeamData(teams, matches[i], j);
 				hometeamFound = true;
 			}
 			
-			if (teams[j].name === matches[i].awayteam){ //away team already in array
+			if (teams[j].name === matches[i].awayteam && onlyHomeMatches !== true){ //away team already in array
 				teams = appendAwayteamData(teams, matches[i], j);
 				awayteamFound = true;
 			}
 		}
 		
-		if (!hometeamFound){
+		if (!hometeamFound && onlyHomeMatches !== false){
 			teams.push(appendTeam(matches[i].hometeam, matches[i], true));
 		}
 		
-		if (!awayteamFound){
+		if (!awayteamFound && onlyHomeMatches !== true){
 			teams.push(appendTeam(matches[i].awayteam, matches[i], false));
 		}
 		

@@ -1,6 +1,6 @@
 // JavaScript source code for Liiga-API client program.
 
-const BASE_URL = "http://localhost:51678/";
+const BASE_URL = "http://localhost:3000/";
 //const BASE_URL = "http://f0e1cba6.ngrok.io/";
 const SEASONS_URL = "api/seasons/";
 const TEAMS_URL = "api/teams/";
@@ -83,6 +83,8 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
 	var url = createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons);
 	
 	console.log(url);
+	
+	sessionStorage.setItem("USE_HOME_GAMES_ONLY", played_at_home); //used to use only correct data in calculating the table.
 	
 	var xmlHttp = createCORSRequest("GET", url);
 	

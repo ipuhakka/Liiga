@@ -90,7 +90,7 @@ namespace API
                     join.Add(db.SelectWherePlayoff((bool)playoff));
                 }
 
-                if (played_at_home != null)
+                if (played_at_home != null && teams != null)
                 {
                     if ((bool)played_at_home)
                     {
