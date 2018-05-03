@@ -83,6 +83,8 @@ function addSelectItemsToUI(element_array, parent_id, item_type){
 	
 	var parentDiv = document.getElementById(parent_id);
 	
+	element_array = alphabeticalSort(element_array);
+	
 	for (var i = 0; i < element_array.length; i++){
 		var div = document.createElement('div');
 		div.classList.add("selectItem");

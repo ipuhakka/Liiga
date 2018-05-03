@@ -131,6 +131,15 @@ function sortData(data, param)
     });
 }
 
+
+function alphabeticalSort(data ){
+	return data.sort(function(a, b){
+    if(a < b) return -1;
+    if(a > b) return 1;
+    return 0;
+})
+}
+
 /*league table sorting with tiebreakers. */
 function sortOfficialTable(data){
 	return data.sort(function (a, b) {
