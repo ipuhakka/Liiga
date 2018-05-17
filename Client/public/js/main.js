@@ -200,7 +200,6 @@ function sortByDate(data){
 /*Function creates a table from matches received from server.
 Each match is processed, teams added to teams array, and then points per game is calculated.*/
 function createLeagueTable(){
-	console.log("create league table");
 	var teams = [];
 	
 	matches = JSON.parse(sessionStorage.getItem('matchData'));
@@ -241,7 +240,6 @@ function createLeagueTable(){
 	}
 	
 	teams = calculatePointsPerGame(teams);
-	console.log("leaving");
 	return teams;
 }
 
