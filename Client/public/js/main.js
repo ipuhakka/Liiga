@@ -119,15 +119,24 @@ function sortByParam(param, data) {
 	if (param === 'date')
 		return sortByDate(data);
 
+	if (param === 'against' || param === 'lost')
+		return sortBySmallest(data, param);
+	
 	return sortData(data, param);
 
 }
 
-/* General sorting for sorting without tiebreakers.*/
+/* General sorting for sorting without tiebreakers. Highest first*/
 function sortData(data, param)
 {
     return data.sort(function (a, b) {
 		return b[param] - a[param];
+    });
+}
+
+function sortBySmallest(data, param){
+	return data.sort(function (a, b) {
+		return a[param] - b[param];
     });
 }
 
@@ -191,6 +200,8 @@ function sortByDate(data){
 /*Function creates a table from matches received from server.
 Each match is processed, teams added to teams array, and then points per game is calculated.*/
 function createLeagueTable(){
+	console.log("create league table");
+	var teams = [];
 	
 	matches = JSON.parse(sessionStorage.getItem('matchData'));
 	onlyHomeMatches = sessionStorage.getItem("USE_HOME_GAMES_ONLY"); //this is null when using all types, true when using home games and false when using away games.
@@ -199,9 +210,6 @@ function createLeagueTable(){
 	}
 	else
 		onlyHomeMatches = null;
-	
-	var teams = [];
-	
 	
 	//go through each match
 	for (var i = 0; i < matches.length; i++){
@@ -233,7 +241,7 @@ function createLeagueTable(){
 	}
 	
 	teams = calculatePointsPerGame(teams);
-
+	console.log("leaving");
 	return teams;
 }
 

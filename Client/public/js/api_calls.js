@@ -21,8 +21,8 @@ function getSeasons(callback, param1, param2) {
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
                 callback(JSON.parse(xmlHttp.responseText), param1, param2);
             }
-            if (xmlHttp.status !== 200) {
-                console.log("Error happened, "+ xmlHttp.status);
+            if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
+                window.alert("could not retrieve seasons");
             }
 
         }
@@ -47,8 +47,8 @@ function getTeams(callback, param1, param2){
             if (xmlHttp.readyState == 4 && xmlHttp.status === 200) {
                 callback(JSON.parse(xmlHttp.responseText), param1, param2);
             }
-            if (xmlHttp.status !== 200) {
-                console.log("Error happened, "+ xmlHttp.status);
+            if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
+                window.alert("could not retrieve teams");
             }
 
         }
@@ -97,8 +97,8 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
 				sessionStorage.setItem('matchData', xmlHttp.responseText);
                 callback('date');
             }
-            if (xmlHttp.status !== 200) {
-                console.log("Error happened, "+ xmlHttp.status);
+            if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
+                window.alert("could not retrieve matches");
             }
 
         }

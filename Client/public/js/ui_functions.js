@@ -5,6 +5,7 @@ function displayResults(sortedBy){
 }
 
 function displayLeagueTable(sortedBy){
+	
 	data = createLeagueTable();
 	
 	if (sortedBy === "points")
@@ -48,34 +49,44 @@ function displayLeagueTable(sortedBy){
 
 function displayMatches(sortedBy){
 	
-	matchesParsed = JSON.parse(sessionStorage.getItem('matchData'));
-	matchesSorted = sortByParam(sortedBy, matchesParsed);
-
-	clearTable("matchesTable");
+	var div = document.createElement("div");
+	div.className = "loadingScreen";
 	
-	var table = document.getElementById('matchesTable');
+	document.getElementById("leagueTableDiv").appendChild(div);
+	div.innerHTML = "processing..";
 	
-	for (var i = 0; i < matchesSorted.length; i++){
+	setTimeout(function(){
+	
+		matchesParsed = JSON.parse(sessionStorage.getItem('matchData'));
+		matchesSorted = sortByParam(sortedBy, matchesParsed);
 
-        var row = table.insertRow(i + 1);
+		clearTable("matchesTable");
+	
+		var table = document.getElementById('matchesTable');
+	
+		for (var i = 0; i < matchesSorted.length; i++){
 
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-		var cell6 = row.insertCell(5);
+			var row = table.insertRow(i + 1);
 
-        cell1.innerHTML = matchesSorted[i].hometeam;
-        cell2.innerHTML = matchesSorted[i].awayteam;
-        cell3.innerHTML = matchesSorted[i].homescore;
-        cell4.innerHTML = matchesSorted[i].awayscore;
-		cell6.innerHTML = matchesSorted[i].date;
-		
-		if (matchesSorted[i].overtime)
-			cell5.innerHTML = "ot.";
-		
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+
+			cell1.innerHTML = matchesSorted[i].hometeam;
+			cell2.innerHTML = matchesSorted[i].awayteam;
+			cell3.innerHTML = matchesSorted[i].homescore;
+			cell4.innerHTML = matchesSorted[i].awayscore;
+			cell6.innerHTML = matchesSorted[i].date;
+			
+			if (matchesSorted[i].overtime)
+				cell5.innerHTML = "ot.";
 	}
+	
+	document.getElementById("leagueTableDiv").removeChild(div);
+	}, 10);
 	
 }
 
