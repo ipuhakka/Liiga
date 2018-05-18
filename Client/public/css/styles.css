@@ -111,6 +111,14 @@ tr:nth-child(odd) td
 	cursor:pointer;
 }
 
+.searchButton{
+	border-radius: 8px;
+	margin-left:20px;
+	margin-top:16px;
+	font-size:16px;
+	cursor:pointer;
+}
+
 .loadingScreen{
 	height:60px;
 	width:200px;

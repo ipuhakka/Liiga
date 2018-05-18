@@ -57,7 +57,7 @@ function displayMatches(sortedBy){
 	var loader = document.createElement("div");
 	loader.className = "loader";
 	
-	document.getElementById("leagueTableDiv").appendChild(div);
+	document.getElementById("matchesDiv").appendChild(div);
 	div.appendChild(textElement);
 	div.appendChild(loader);
 	
@@ -92,7 +92,7 @@ function displayMatches(sortedBy){
 			
 	}
 	
-	document.getElementById("leagueTableDiv").removeChild(div);
+	document.getElementById("matchesDiv").removeChild(div);
 	}, 10);
 	
 }
