@@ -52,8 +52,14 @@ function displayMatches(sortedBy){
 	var div = document.createElement("div");
 	div.className = "loadingScreen";
 	
+	var textElement = document.createElement("div");
+	textElement.innerHTML = "processing..";
+	var loader = document.createElement("div");
+	loader.className = "loader";
+	
 	document.getElementById("leagueTableDiv").appendChild(div);
-	div.innerHTML = "processing..";
+	div.appendChild(textElement);
+	div.appendChild(loader);
 	
 	setTimeout(function(){
 	
@@ -65,7 +71,7 @@ function displayMatches(sortedBy){
 		var table = document.getElementById('matchesTable');
 	
 		for (var i = 0; i < matchesSorted.length; i++){
-
+		
 			var row = table.insertRow(i + 1);
 
 			var cell1 = row.insertCell(0);
@@ -83,6 +89,7 @@ function displayMatches(sortedBy){
 			
 			if (matchesSorted[i].overtime)
 				cell5.innerHTML = "ot.";
+			
 	}
 	
 	document.getElementById("leagueTableDiv").removeChild(div);
