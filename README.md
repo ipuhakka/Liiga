@@ -16,7 +16,7 @@ npm install --save express@4.15.2
 
 USE
 -----------
-API cannot be used without admin-privileges so it needs to be started by going to folder API->bin->Debug and running API.exe as admininstrator.
+API can be built with visual studio. After building, API can be launched from folder API->bin->debug, and running API.exe as admininstrator.
 
 Client can be started from scripts folder by clicking client_start.bat-file(on windows).
 
