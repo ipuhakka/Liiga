@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API
 {
-    class APIError: System.Exception
+    class APIError: Exception
     {
         public string errormessage;
         public APIError(string error)
