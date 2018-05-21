@@ -23,6 +23,7 @@ function getSeasons(callback, param1, param2) {
             }
             if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
                 window.alert("could not retrieve seasons");
+				console.log("errormessage: " + xmlHttp.responseText);
             }
 
         }
@@ -49,6 +50,7 @@ function getTeams(callback, param1, param2){
             }
             if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
                 window.alert("could not retrieve teams");
+				console.log("errormessage: " + xmlHttp.responseText);
             }
 
         }
@@ -99,6 +101,7 @@ function getMatches(between, goal_difference, gd_is_at_least, playoff, played_at
             }
             if (xmlHttp.readyState == 4 && xmlHttp.status !== 200) {
                 window.alert("could not retrieve matches");
+				console.log("errormessage: " + xmlHttp.responseText);
             }
 
         }
