@@ -17,7 +17,15 @@ namespace API
 
             using (HttpSelfHostServer server = new HttpSelfHostServer(config))
             {
-                server.OpenAsync().Wait();
+                try
+                {
+                    server.OpenAsync().Wait();
+                }
+                catch (AggregateException e) {
+                    Console.WriteLine("Access was denied, please run as admin. \n Press enter to quit");
+                    Console.ReadLine();
+                    return;
+                }
                 Console.WriteLine("Listening on localhost:3000, press Enter to quit.");
                 Console.ReadLine();
             }
