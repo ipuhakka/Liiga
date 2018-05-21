@@ -9,20 +9,22 @@ DEPENDENCIES
 
 Client application runs on Node.js so it needs to be installed on the machine. https://nodejs.org/en/download/
 
-Client server uses express v14.5.2. This can be installed by going to Client folder and typing in command
-```
-npm install --save express@4.15.2
-```
+API dll's are included in API folder, but machine needs to have csc.exe setup to compile the project.
+
+BUILD
+----------
+If node and c# compiler have been installed on the machine, 
+both client and the api can be built by executing build.bat in scripts folder. 
+This installs needed dependencies for client and compiles the api.
 
 USE
 -----------
-API can be built with visual studio. After building, API can be launched from folder API->bin->debug, and running API.exe as admininstrator.
-
-Client can be started from scripts folder by clicking client_start.bat-file(on windows).
+Once api and client are ready, api and client can be started by running start.bat as admin (as the api requires admin privileges). 
 
 Alternatively, client can be started by going to Client folder in command line and typing in command:
 ```
 node server.js
 ```
-	
 Client runs in localhost:3001, so after running the command this can be opened on a browser. 
+
+Api can also be started from API folder, by running API.exe as admin. 
