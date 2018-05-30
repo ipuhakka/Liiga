@@ -3,7 +3,7 @@ function main() {
 	sessionStorage.setItem('team', null);
 	sessionStorage.setItem('season', null);
 	getSeasons(addSelectItemsToUI, "seasonDiv", "season");
-	getTeams(addSelectItemsToUI, "teamDiv", "team");
+	getTeams(addSelectItemsToUI, "teamDiv", "team"); 
 }
 
 /* click method for all switchButton-elements. Pressed button is selected. Sibling buttons are updated to notSelected.*/
