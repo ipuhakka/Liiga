@@ -49,7 +49,7 @@ function itemSelected(element, item_type){
 			}
 		}
 		items.push(text);
-		element.style.backgroundColor = "#4156f4";
+		element.style.backgroundColor = "#2E4A62";
 		sessionStorage.setItem(item_type, JSON.stringify(items));
 	}
 			

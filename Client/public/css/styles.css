@@ -2,7 +2,7 @@
 table, th
 {
     border: 1px solid black;
-    background: #dbf302;
+    background: #ECDB54;
 }
 
 tr{
@@ -16,7 +16,7 @@ tr:nth-child(even) td
 
 tr:nth-child(odd) td
 {    
-    background: #dbf302;
+    background: #ECDB54;
 }
 
 .tableDiv{
@@ -105,8 +105,8 @@ tr:nth-child(odd) td
 .switchButtonSelected{
 	background-position: -100% 0;
 	background-size: 200% 100%;
-	background-image: linear-gradient(to right, white 50%, #4156f4 50%);
-    transition: background-position 1s ease-out;
+	background-image: linear-gradient(to right, white 50%, #2E4A62 50%);
+    transition: background-position 0.75s ease-out;
 }
 
 .switchButtonNotSelected{
@@ -123,6 +123,10 @@ tr:nth-child(odd) td
 	margin-top:16px;
 	font-size:16px;
 	cursor:pointer;
+}
+
+.searchButton:hover{
+	background-color:#F0EDE5;
 }
 
 .loadingScreen{
