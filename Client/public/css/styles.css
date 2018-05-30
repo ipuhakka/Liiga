@@ -103,12 +103,18 @@ tr:nth-child(odd) td
 }
 
 .switchButtonSelected{
-	background-color:#4156f4;
+	background-position: -100% 0;
+	background-size: 200% 100%;
+	background-image: linear-gradient(to right, white 50%, #4156f4 50%);
+    transition: background-position 1s ease-out;
 }
 
 .switchButtonNotSelected{
-	background-color:white;
-	cursor:pointer;
+	background-color: white;
+}
+
+.switchButtonNotSelected:hover{
+	background-color:#F0EDE5;
 }
 
 .searchButton{

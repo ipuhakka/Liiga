@@ -11,17 +11,15 @@ function pressedSelector(button){
 
 	button.classList.remove("switchButtonNotSelected");
 	button.classList.add("switchButtonSelected");
-	
-    siblings = button.parentNode.children;
-	
+
+    siblings = button.parentNode.children;	
 	for (var i = 0; i < siblings.length; i++){
-		if (siblings[i] != button){
+		if (siblings[i] != button){			
 			siblings[i].classList.remove("switchButtonSelected");
 			siblings[i].classList.add("switchButtonNotSelected");
 		}
 	}
 }
-
 
 /*Selects or deselects pressed element. Pressed element contains a text element with textContent.
 
@@ -172,7 +170,6 @@ function sortOfficialTable(data){
     });
 }
 
-
 function sortByDate(data){
 	
 	/*Return year if there is a difference, return month if there's a difference, 
@@ -195,7 +192,6 @@ function sortByDate(data){
     }); 
 	
 }
-
 
 /*Function creates a table from matches received from server.
 Each match is processed, teams added to teams array, and then points per game is calculated.*/
@@ -375,4 +371,3 @@ function appendAwayteamData(teams, match, j){
 		
 	return teams;
 }
-
