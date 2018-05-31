@@ -15,7 +15,7 @@ namespace Liiga
         {
             /* setUp class sets Database variables and sets the path to the correct directory. 
              Current directory can for some reason be the wrong one so it needs to be set.*/
-            Directory.SetCurrentDirectory(@"C:\Users\iirop\Documents\Visual Studio 2015\Projects\Liiga\Liiga");
+            Directory.SetCurrentDirectory(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\"));
             db.CreateDatabase(@"db\liigaTest.db");
             db.setConnectionString("Data Source=db\\liigaTest.db; Version=3;");
             db.set_db_schema("db\\liiga_schema_dump.sql");
