@@ -34,50 +34,52 @@
 	</div>
 	</div>
 	<div class="subWindow" style="margin-top:5px;">
-		<div class="selectorHeader">
-			<text>Matches between/from teams: </text>
-		</div>
-		<div id="matches_against_selector" class="searchSelectorSwitch" id="match_type">
-			<button id="matches_between_From" value="false" class="switch switchButtonSelected" onclick="pressedSelector(this)">From</button>
-			<button id="match_between_Between" value="true" class="switch switchButtonNotSelected" onclick="pressedSelector(this)">Between</button>
-		</div>
-		<div class="selectorHeader">
-			<text>Match type: </text>
-		</div>
-		<div id="match_type_selector" class="searchSelectorSwitch" id="match_type">
-			<button id="match_type_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All match types</button>
-			<button id="match_type_reqular" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular season</button>
-			<button id="match_type_playoff" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Playoff</button>
-		</div>
-		<div class="selectorHeader">
-			<text>Match venue: </text>
-		</div>
-		<div id="match_venue_selector" class="searchSelectorSwitch" id="match_type">
-			<button id="match_venue_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All venues</button>
-			<button id="match_venue_home" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Home games</button>
-			<button id="match_venue_away" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Away games</button>
-		</div>
-		<div class="selectorHeader">
-			<text>Goal difference: </text>
-		</div>
-		<div id="match_gd_selector" class="searchSelectorSwitch" id="match_type">
-			<button id="match_gd_none" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
-			<button id="match_gd_at_most" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at most</button>
-			<button id="match_gd_at_least" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at least</button>
-		</div>
-		<form>
-			<input type="text" class="gd_form" id="goal_difference"> goals
-		</form>
-		<div class="selectorHeader">
-			<text>Match end: </text>
-		</div>
-		<div id="match_end_selector" class="searchSelectorSwitch" id="match_type">
-			<button id="match_end_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
-			<button id="match_end_regular_time" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular time</button>
-			<button id="match_end_overtime" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Overtime</button>
-		</div>
-		<div id="wrapper">
-		<button class="searchButton" onclick="search();">Search</button>
+		<div>
+			<div class="selectorHeader">
+				<text>Matches between/from teams: </text>
+			</div>
+			<div id="matches_against_selector" class="searchSelectorSwitch" id="match_type">
+				<button id="matches_between_From" value="false" class="switch switchButtonSelected" onclick="pressedSelector(this)">From</button>
+				<button id="match_between_Between" value="true" class="switch switchButtonNotSelected" onclick="pressedSelector(this)">Between</button>
+			</div>
+			<div class="selectorHeader">
+				<text>Match type: </text>
+			</div>
+			<div id="match_type_selector" class="searchSelectorSwitch" id="match_type">
+				<button id="match_type_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All match types</button>
+				<button id="match_type_reqular" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular season</button>
+				<button id="match_type_playoff" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Playoff</button>
+			</div>
+			<div class="selectorHeader">
+				<text>Match venue: </text>
+			</div>
+			<div id="match_venue_selector" class="searchSelectorSwitch" id="match_type">
+				<button id="match_venue_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All venues</button>
+				<button id="match_venue_home" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Home games</button>
+				<button id="match_venue_away" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Away games</button>
+			</div>
+			<div class="selectorHeader">
+				<text>Goal difference: </text>
+			</div>
+			<div id="match_gd_selector" class="searchSelectorSwitch" id="match_type">
+				<button id="match_gd_none" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
+				<button id="match_gd_at_most" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at most</button>
+				<button id="match_gd_at_least" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Is at least</button>
+			</div>
+			<form>
+				<input type="text" class="gd_form" id="goal_difference"> goals
+			</form>
+			<div class="selectorHeader">
+				<text>Match end: </text>
+			</div>
+			<div id="match_end_selector" class="searchSelectorSwitch" id="match_type">
+				<button id="match_end_all" value="null" class="switchButton switchButtonSelected" onclick="pressedSelector(this)">All games</button>
+				<button id="match_end_regular_time" value="false" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Regular time</button>
+				<button id="match_end_overtime" value="true" class="switchButton switchButtonNotSelected" onclick="pressedSelector(this)">Overtime</button>
+			</div>
+			<div id="wrapper">
+				<button class="searchButton" onclick="search();">Search</button>
+			</div>
 		</div>
 	</div>
 	<div class="subWindow" style="margin-top:5px;">
