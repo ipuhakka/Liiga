@@ -28,3 +28,8 @@ node server.js
 Client runs in localhost:3001, so after running the command this can be opened on a browser. 
 
 Api can also be started from API folder, by running API.exe as admin. 
+
+TESTING
+-----------
+Database tests can be run by opening project in Visual Studio and building Liiga project, which build the dependencies to right folder. 
+After that tests can be run with Test Explorer.
