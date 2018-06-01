@@ -13,8 +13,7 @@ namespace Liiga
         [OneTimeSetUp]
         public void setUpTests()
         {
-            /* setUp class sets Database variables and sets the path to the correct directory. 
-             Current directory can for some reason be the wrong one so it needs to be set.*/
+            /* setUp class sets Database variables and sets the path to the correct directory. */
             Directory.SetCurrentDirectory(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\"));
             db.CreateDatabase(@"db\liigaTest.db");
             db.setConnectionString("Data Source=db\\liigaTest.db; Version=3;");
