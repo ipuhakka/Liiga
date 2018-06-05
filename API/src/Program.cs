@@ -21,7 +21,7 @@ namespace API
                 {
                     server.OpenAsync().Wait();
                 }
-                catch (AggregateException e) {
+                catch (AggregateException) {
                     Console.WriteLine("Access was denied, please run as admin. \n Press enter to quit");
                     Console.ReadLine();
                     return;
