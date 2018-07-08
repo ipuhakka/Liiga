@@ -2,7 +2,7 @@ DESCRIPTION
 ------------------
 
 This project includes an SQLite-database containing results from Finnish hockey league matches from year 2000 to present. Project has also a web api
-to expose the data, and an HTML/JavaScript client to use it. 
+to expose the data, and a react webclient to use it. 
 
 DEPENDENCIES
 ---------------
@@ -15,19 +15,15 @@ BUILD
 ----------
 If node and c# compiler have been installed on the machine, 
 both client and the api can be built by executing build.bat in scripts folder. 
-This installs needed dependencies for client and compiles the api.
+This installs needed dependencies for client and compiles the api. Client 
+dependency installation can take several minutes.
 
 USE
 -----------
-Once api and client are ready, api and client can be started by running start.bat as admin (as the api requires admin privileges). 
-
-Alternatively, client can be started by going to Client folder in command line and typing in command:
-```
-node server.js
-```
-Client runs in localhost:3001, so after running the command this can be opened on a browser. 
-
-Api can also be started from API folder, by running API.exe as admin. 
+Once api and client are ready, api and client can be started by running start_production.bat or start_development.bat. 
+start_production -batch file uses serve to serve the optimized version of the react-client which runs in port 5000, 
+while start_development.bat file starts the react start script. This opens the right page in a browser and tells 
+the user the correct address to use.  
 
 TESTING
 -----------

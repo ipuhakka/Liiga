@@ -2,6 +2,6 @@
 @cd /d "%~dp0"
 cd../API
 start API.exe
-cd../Client
-start node server.js
+cd../react-client/liiga-result-data
+call npm start
 cd../scripts
