@@ -1,0 +1,52 @@
+.App {
+	margin-bottom:10px;
+}
+
+.App-header {
+  background-color: #222;
+  height:75px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.searchButton{
+	margin-top: 2px;
+	margin-bottom: 2px;
+	float:right;
+}
+
+@media screen and (max-width: 991px) {
+  .searchButton{
+	  margin-top:5px;
+	  width:100%;
+	  margin-bottom: 5px;
+  }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: white; 
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background:  #A9A9A9;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    background:  white;
+}
+
+
+
