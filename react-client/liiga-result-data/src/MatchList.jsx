@@ -20,7 +20,7 @@ class MatchList extends Component{
 	render(){	
 		var rows = [];
 		var moreButton = null;
-		if (this.props.data !== null){
+		if (this.props.data !== null && this.props.data.length > 0){
 			var data = this.props.data;
 			
 			for (var i = 0; i < this.state.currentIndex + 100; i++){
