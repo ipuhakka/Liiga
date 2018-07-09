@@ -18,9 +18,10 @@ Build files work only for windows.
 If node and c# compiler have been installed on the machine, 
 both client and the api can be built.
 
-**build_api.bat** builds the api.
-**install_client_dependencies.bat** Needs to be run only once. After dependencies have been installed, 
-**build_client.bat** can be used to build production version of the client.
+**install_and_build.bat** Installs needed dependencies for the client and build both api and client. This needs to be used only once.
+
+**build_api.bat** builds the api. 
+**build_client.bat** builds production version of the client.
 
 USE
 -----------
