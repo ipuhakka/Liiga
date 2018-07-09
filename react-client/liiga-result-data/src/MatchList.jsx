@@ -19,6 +19,7 @@ class MatchList extends Component{
 	
 	render(){	
 		var rows = [];
+		var moreButton = null;
 		if (this.props.data !== null){
 			var data = this.props.data;
 			
@@ -35,11 +36,8 @@ class MatchList extends Component{
 							<td>{ot}</td>
 						</tr>);
 			}
-			rows.push(<tr key={this.state.currentIndex + 101}>
-						<th>
-							<Button onClick={this.loadMoreMatches}>More</Button>
-						</th>
-					</tr>);
+			moreButton = <Button className="moreButton" onClick={this.loadMoreMatches}>More matches</Button>
+						
 		}
 
 		return(
@@ -57,6 +55,7 @@ class MatchList extends Component{
 					</thead>
 					<tbody>{rows}</tbody>
 			</Table>
+			{moreButton}
 			</div>
 		);
 	}
