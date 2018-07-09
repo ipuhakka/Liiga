@@ -11,6 +11,7 @@ import MatchList from './MatchList.jsx';
 import ListSelect from './ListSelect.jsx';
 import SelectOption from './SelectOption.jsx';
 import LeagueTable from './LeagueTable.jsx';
+import * as Sort from './Sort.js';
 
 const BASE_URL = "http://localhost:3000/";
 //const BASE_URL = "http://709f83f5.ngrok.io/";
@@ -159,7 +160,7 @@ class App extends Component {
 			xmlHttp.onreadystatechange =( () => {
 				if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
 					this.setState({
-						matchData: JSON.parse(xmlHttp.responseText),
+						matchData: Sort.sortByNewestDate(JSON.parse(xmlHttp.responseText), "date")
 					});
 					
 					this.setState({

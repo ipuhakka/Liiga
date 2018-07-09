@@ -69,6 +69,7 @@ class LeagueTable extends Component{
 		);
 	}
 	
+	/*chooses the correct sort method based on the parameter and in what order list was already sorted.*/
 	sortBy(param){
 		if (param === 'points')
 			this.props.onUpdate(this.sortOfficialTable(this.props.tableData));
@@ -79,12 +80,14 @@ class LeagueTable extends Component{
 		else {
 			if (param === this.state.lastSortedParam && !this.state.byHighest){
 				this.props.onUpdate(Sort.sortBySmallest(this.props.tableData, param));
+				
+				this.setState({byHighest: true});
 			}				
 			else {
 				this.props.onUpdate(Sort.sortByHighest(this.props.tableData, param));
+				this.setState({byHighest: false});
 			}
 
-			this.setState({byHighest: !this.state.byHighest});
 		}
 		this.setState({
 			lastSortedParam: param

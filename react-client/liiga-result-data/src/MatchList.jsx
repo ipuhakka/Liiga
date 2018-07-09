@@ -2,24 +2,27 @@ import React, { Component } from 'react';
 import './css/MatchList.css';
 import Table from 'react-bootstrap/lib/Table';
 import * as Sort from './Sort.js';
+import Button from 'react-bootstrap/lib/Button';
 
 class MatchList extends Component{
 	constructor(props){
 		super(props);
 		this.sortBy = this.sortBy.bind(this);
+		this.loadMoreMatches = this.loadMoreMatches.bind(this);
 					
 		this.state={
 			lastSortedBy: null,
-			byHighest: true
+			byHighest: true, 
+			currentIndex: 0
 		}
 	}
 	
-	render(){
+	render(){	
 		var rows = [];
-		
 		if (this.props.data !== null){
 			var data = this.props.data;
-			for (var i = 0; i < data.length; i++){
+			
+			for (var i = 0; i < this.state.currentIndex + 100; i++){
 				var ot = "";
 				if (data[i].overtime)
 					ot="ot.";
@@ -30,9 +33,15 @@ class MatchList extends Component{
 							<td>{data[i].awayscore}</td>
 							<td>{data[i].date}</td>
 							<td>{ot}</td>
-						</tr>)
+						</tr>);
 			}
+			rows.push(<tr key={this.state.currentIndex + 101}>
+						<th>
+							<Button onClick={this.loadMoreMatches}>More</Button>
+						</th>
+					</tr>);
 		}
+
 		return(
 			<div className="table-div">
 				<Table responsive striped condensed>
@@ -52,7 +61,9 @@ class MatchList extends Component{
 		);
 	}
 	
-	sortBy(param){
+	/*calls sorting functions. If a parameter is being used in the sort twice in a row and byHighest is false,
+	it calls for sorting from the lowest, otherwise highest sort is called.*/
+	sortBy(param){		
 		if (param === 'hometeam' || param === 'awayteam')
 			this.props.onUpdate(Sort.sortAlphabetically(this.props.data, param));
 		
@@ -62,18 +73,29 @@ class MatchList extends Component{
 					this.props.onUpdate(Sort.sortByOldestDate(this.props.data, param));	
 				else 
 					this.props.onUpdate(Sort.sortBySmallest(this.props.data, param));	
+				
+				this.setState({byHighest: true});
 			}	
 			else {
 				if (param === "date")
 					this.props.onUpdate(Sort.sortByNewestDate(this.props.data, param));
 				else
 					this.props.onUpdate(Sort.sortByHighest(this.props.data, param));
+				
+				this.setState({byHighest: false});
 			}
 
-			this.setState({byHighest: !this.state.byHighest});
 		}
 		this.setState({
-			lastSortedParam: param
+			lastSortedParam: param,
+			currentIndex: 0
+		});
+	}
+	
+	/*Adds 100 to currentIndex. 0 to currentIndex matches are rendered into the view.*/
+	loadMoreMatches(){
+		this.setState({
+			currentIndex: this.state.currentIndex + 100
 		});
 	}
 }
