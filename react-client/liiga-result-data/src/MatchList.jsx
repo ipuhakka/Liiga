@@ -64,28 +64,28 @@ class MatchList extends Component{
 	/*calls sorting functions. If a parameter is being used in the sort twice in a row and byHighest is false,
 	it calls for sorting from the lowest, otherwise highest sort is called.*/
 	sortBy(param){		
-		if (param === 'hometeam' || param === 'awayteam')
-			this.props.onUpdate(Sort.sortAlphabetically(this.props.data, param));
-		
-		else {
-			if (param === this.state.lastSortedParam && !this.state.byHighest){
-				if (param === "date")
-					this.props.onUpdate(Sort.sortByOldestDate(this.props.data, param));	
-				else 
-					this.props.onUpdate(Sort.sortBySmallest(this.props.data, param));	
-				
-				this.setState({byHighest: true});
-			}	
-			else {
-				if (param === "date")
-					this.props.onUpdate(Sort.sortByNewestDate(this.props.data, param));
-				else
-					this.props.onUpdate(Sort.sortByHighest(this.props.data, param));
-				
-				this.setState({byHighest: false});
-			}
 
+		if (param === this.state.lastSortedParam && !this.state.byHighest){
+			if (param === "date")
+				this.props.onUpdate(Sort.sortByOldestDate(this.props.data, param));	
+			else if (param === 'hometeam' || param === 'awayteam')
+				this.props.onUpdate(Sort.sortAlphabeticallyBackwards(this.props.data, param));
+			else 
+				this.props.onUpdate(Sort.sortBySmallest(this.props.data, param));	
+				
+			this.setState({byHighest: true});
+		}	
+		else {
+			if (param === "date")
+				this.props.onUpdate(Sort.sortByNewestDate(this.props.data, param));
+			else if (param === 'hometeam' || param === 'awayteam')
+				this.props.onUpdate(Sort.sortAlphabetically(this.props.data, param));
+			else
+				this.props.onUpdate(Sort.sortByHighest(this.props.data, param));
+				
+			this.setState({byHighest: false});
 		}
+
 		this.setState({
 			lastSortedParam: param,
 			currentIndex: 0

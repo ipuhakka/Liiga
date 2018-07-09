@@ -74,17 +74,21 @@ class LeagueTable extends Component{
 		if (param === 'points')
 			this.props.onUpdate(this.sortOfficialTable(this.props.tableData));
 		
-		else if (param === "name")
-			this.props.onUpdate(Sort.sortAlphabetically(this.props.tableData, param));
-		
 		else {
 			if (param === this.state.lastSortedParam && !this.state.byHighest){
-				this.props.onUpdate(Sort.sortBySmallest(this.props.tableData, param));
+				if (param === "name")
+					this.props.onUpdate(Sort.sortAlphabeticallyBackwards(this.props.tableData, param));
+				else 
+					this.props.onUpdate(Sort.sortBySmallest(this.props.tableData, param));	
 				
 				this.setState({byHighest: true});
 			}				
 			else {
-				this.props.onUpdate(Sort.sortByHighest(this.props.tableData, param));
+				if (param === "name")
+					this.props.onUpdate(Sort.sortAlphabetically(this.props.tableData, param));
+				else
+					this.props.onUpdate(Sort.sortByHighest(this.props.tableData, param));
+				
 				this.setState({byHighest: false});
 			}
 
