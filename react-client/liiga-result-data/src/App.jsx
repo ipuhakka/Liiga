@@ -287,7 +287,6 @@ class App extends Component {
 	  this.setState({
 		  playoff: value
 	  });
-	  console.log("playoff " + value);
   }
   
   /*sets the value for homeGames attribute. possible values: null, true, false.
@@ -299,7 +298,6 @@ class App extends Component {
 	  this.setState({
 		  homeMatches: value
 	  });
-	  console.log("match at home " + value);
   }
   
   /*Updates status of gd_over selector. Null = all matches are returned, true = games with goal difference over x are selected, false = games with
@@ -323,7 +321,6 @@ class App extends Component {
 	  this.setState({
 		  end_in_overtime: value
 	  });
-	  console.log("match end " + value);
   }
   
   /*updates the between search parameter. Since SelectOption returns null when from is selected, this has to be interpreted as false value.*/
@@ -335,7 +332,6 @@ class App extends Component {
 	  this.setState({
 		  between: between
 	  });
-	  console.log("between set to " + between);
   }
   
   updateLeagueTableState(data){

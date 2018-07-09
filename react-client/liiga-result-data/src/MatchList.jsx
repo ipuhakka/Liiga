@@ -20,10 +20,14 @@ class MatchList extends Component{
 	render(){	
 		var rows = [];
 		var moreButton = null;
-		if (this.props.data !== null && this.props.data.length > 0){
+		if (this.props.data !== null){
 			var data = this.props.data;
-			
+			var moreDataToLoad = true;
 			for (var i = 0; i < this.state.currentIndex + 100; i++){
+				if (i >= data.length){
+					moreDataToLoad = false;
+					break;
+				}
 				var ot = "";
 				if (data[i].overtime)
 					ot="ot.";
@@ -36,8 +40,8 @@ class MatchList extends Component{
 							<td>{ot}</td>
 						</tr>);
 			}
-			moreButton = <Button className="moreButton" onClick={this.loadMoreMatches}>More matches</Button>
-						
+			if (moreDataToLoad)
+				moreButton = <Button className="moreButton" onClick={this.loadMoreMatches}>More matches</Button>					
 		}
 
 		return(
