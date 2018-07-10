@@ -13,6 +13,8 @@ class LeagueTable extends Component{
 		this.appendHometeamData = this.appendHometeamData.bind(this);
 		this.appendAwayteamData = this.appendAwayteamData.bind(this);	
 		this.sortBy = this.sortBy.bind(this);
+		this.usesOldScoring = this.usesOldScoring.bind(this);
+		this.otLoss0points = this.otLoss0points.bind(this);
 		
 		this.state={
 			lastSortedBy: null,
@@ -178,28 +180,37 @@ class LeagueTable extends Component{
 			scored = match.awayscore;
 			conceded = match.homescore;
 		}
-	
-		if (scored > conceded){
-			if (match.overtime){ //won on overtime
-				points = 2;
-				OTWins = 1;
-			}
-			else { //won on regular time
-				points = 3;
-				wins = 1;
-			}			
+		
+		if (scored === conceded){
+			points = 1;
+			OTLosses = 1;
 		}
 		else {
-			if (match.overtime){ //lost on overtime
-				points = 1;
-				OTLosses = 1;
+			if (scored > conceded){
+				if (match.overtime){ //won on overtime
+					points = 2;
+					OTWins = 1;
+				}
+				else { //won on regular time
+					if (this.usesOldScoring(match))
+						points = 2;
+					else
+						points = 3;
+					wins = 1;
+				}			
 			}
-			else { //lost on regular time
-				losses = 1;
+			else {
+				if (match.overtime){ //lost on overtime
+				if (!this.otLoss0points(match))
+						points = 1;
+					OTLosses = 1;
+				}
+				else { //lost on regular time
+					losses = 1;
+				}
 			}
 		}
 
-	
 		var team = {
 			name: teamname,
 			matches: matches,
@@ -225,24 +236,34 @@ class LeagueTable extends Component{
 				
 		teams[j].matches = teams[j].matches + 1;
 				
-		if (match.homescore > match.awayscore){ //home win
-			if (match.overtime){
-				teams[j].otWins = teams[j].otWins + 1;
-				teams[j].points = teams[j].points + 2;
+		if (match.homescore === match.awayscore){
+			teams[j].otLosses = teams[j].otLosses + 1;
+			teams[j].points = teams[j].points + 1;
+		}	
+		else {				
+			if (match.homescore > match.awayscore){ //home win
+				if (match.overtime){
+					teams[j].otWins = teams[j].otWins + 1;
+					teams[j].points = teams[j].points + 2;
+				}
+				else { //win on regular time 
+					if (this.usesOldScoring(match))
+						teams[j].points = teams[j].points + 2;
+					else
+						teams[j].points = teams[j].points + 3;
+					teams[j].won = teams[j].won + 1;
+				}
 			}
-			else { //win on regular time 
-				teams[j].won = teams[j].won + 1;
-				teams[j].points = teams[j].points + 3;
-			}
+			else { //away win
+				if (match.overtime) {
+					if (!this.otLoss0points(match))
+						teams[j].points = teams[j].points + 1;
+					teams[j].otLosses = teams[j].otLosses + 1;
+				}
+				else //lost on regular time
+					teams[j].lost = teams[j].lost + 1;
+				}	
 		}
-		else { //away win
-			if (match.overtime) {
-				teams[j].otLosses = teams[j].otLosses + 1;
-				teams[j].points = teams[j].points + 1;
-			}
-			else //lost on regular time
-				teams[j].lost = teams[j].lost + 1;
-			}
 		
 		return teams;
 	}
@@ -255,27 +276,51 @@ class LeagueTable extends Component{
 		teams[j].against = teams[j].against + match.homescore;
 				
 		teams[j].matches = teams[j].matches + 1;
-				
-		if (match.awayscore > match.homescore){ //away win
-			if (match.overtime){
-				teams[j].otWins = teams[j].otWins + 1;
-				teams[j].points = teams[j].points + 2;
-			}
-			else { //win on regular time 
-				teams[j].won = teams[j].won + 1;
-				teams[j].points = teams[j].points + 3;
-			}
+						
+		if (match.homescore === match.awayscore){
+			teams[j].otLosses = teams[j].otLosses + 1;
+			teams[j].points = teams[j].points + 1;
 		}
-		else { //home win
-			if (match.overtime) {
-				teams[j].otLosses = teams[j].otLosses + 1;
-				teams[j].points = teams[j].points + 1;
+		else {
+			if (match.awayscore > match.homescore){ //away win
+				if (match.overtime){
+					teams[j].otWins = teams[j].otWins + 1;
+					teams[j].points = teams[j].points + 2;
+				}
+				else { //win on regular time 
+					if (this.usesOldScoring(match))
+						teams[j].points = teams[j].points + 2;
+					else
+						teams[j].points = teams[j].points + 3;
+					teams[j].won = teams[j].won + 1;
+				}
 			}
-			else //lost on regular time
-				teams[j].lost = teams[j].lost + 1;
-			}
-		
+			else { //home win
+				if (match.overtime) {
+					if (!this.otLoss0points(match))
+						teams[j].points = teams[j].points + 1;
+					teams[j].otLosses = teams[j].otLosses + 1;
+				}
+				else //lost on regular time
+					teams[j].lost = teams[j].lost + 1;
+				}
+		}
 		return teams;
+	}
+
+	usesOldScoring(match){
+		console.log("Match is: " + JSON.stringify(match));
+		if (match.season > "03-04")
+			return false;
+		else
+			return true;
+	}
+	
+	otLoss0points(match){
+		if (match.season > "00-01")
+			return false;
+		else
+			return true;
 	}
 }
 
