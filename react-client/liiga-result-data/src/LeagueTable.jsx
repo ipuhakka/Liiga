@@ -309,7 +309,6 @@ class LeagueTable extends Component{
 	}
 
 	usesOldScoring(match){
-		console.log("Match is: " + JSON.stringify(match));
 		if (match.season > "03-04")
 			return false;
 		else

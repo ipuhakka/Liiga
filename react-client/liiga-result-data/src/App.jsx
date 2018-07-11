@@ -13,8 +13,8 @@ import SelectOption from './SelectOption.jsx';
 import LeagueTable from './LeagueTable.jsx';
 import * as Sort from './Sort.js';
 
-const BASE_URL = "http://localhost:3000/";
-//const BASE_URL = "http://eff1e240.ngrok.io/";
+//const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://ab416ab7.ngrok.io/";
 const SEASONS_URL = "api/seasons/";
 const TEAMS_URL = "api/teams/";
 
@@ -57,6 +57,16 @@ class App extends Component {
 	componentDidMount(){
 		this.getSeasons();
 		this.getTeams();
+		document.onkeydown = ((e) => {
+			e = e || window.event;
+			switch (e.which || e.keyCode) {
+			case 13 : 
+				this.search();
+				break;
+			default:
+				break;
+		}
+		});
 	}
 	
 	render() {
