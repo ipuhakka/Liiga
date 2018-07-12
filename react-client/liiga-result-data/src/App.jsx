@@ -13,8 +13,8 @@ import SelectOption from './SelectOption.jsx';
 import LeagueTable from './LeagueTable.jsx';
 import * as Sort from './Sort.js';
 
-//const BASE_URL = "http://localhost:3000/";
-const BASE_URL = "http://ab416ab7.ngrok.io/";
+const BASE_URL = "http://localhost:3000/";
+//const BASE_URL = "http://ab416ab7.ngrok.io/";
 const SEASONS_URL = "api/seasons/";
 const TEAMS_URL = "api/teams/";
 

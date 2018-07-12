@@ -67,7 +67,9 @@ class MatchList extends Component{
 	/*calls sorting functions. If a parameter is being used in the sort twice in a row and byHighest is false,
 	it calls for sorting from the lowest, otherwise highest sort is called.*/
 	sortBy(param){		
-
+		if (this.props.data === null)
+			return;
+	
 		if (param === this.state.lastSortedParam && !this.state.byHighest){
 			if (param === "date")
 				this.props.onUpdate(Sort.sortByOldestDate(this.props.data, param));	

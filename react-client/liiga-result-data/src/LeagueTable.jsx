@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './css/App.css';
+import './css/LeagueTable.css';
 import Table from 'react-bootstrap/lib/Table';
 import * as Sort from './Sort.js';
 
@@ -73,6 +73,9 @@ class LeagueTable extends Component{
 	
 	/*chooses the correct sort method based on the parameter and in what order list was already sorted.*/
 	sortBy(param){
+		if (this.props.tableData === null)
+			return;
+		
 		if (param === 'points')
 			this.props.onUpdate(this.sortOfficialTable(this.props.tableData));
 		

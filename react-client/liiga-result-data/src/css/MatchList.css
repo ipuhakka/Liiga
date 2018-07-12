@@ -2,3 +2,7 @@
 	height:600px;
 	overflow-x: scroll;
 }
+
+th{
+	cursor: pointer;
+}
