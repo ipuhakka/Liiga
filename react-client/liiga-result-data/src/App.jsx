@@ -173,7 +173,7 @@ class App extends Component {
 						matchData: Sort.sortByNewestDate(JSON.parse(xmlHttp.responseText), "date")
 					});
 					
-					this.setState({
+					this.setState({ //this done later than matchData because of necessary state handling
 						tableData: this.LeagueTable.sortOfficialTable(this.LeagueTable.createLeagueTable())
 					});
 				}
