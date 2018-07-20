@@ -96,7 +96,7 @@ namespace Liiga
         {
 
             if (db_schema == null || connectionString == null)
-                throw new DatabaseError(); 
+                throw new DatabaseError();
 
             string sql = File.ReadAllText(db_schema);
 
@@ -118,37 +118,25 @@ namespace Liiga
             Query(sql);
         }
 
-        /// <summary>
-        /// Gets all matches in the database
-        /// </summary>
-        /// <returns>A list of Match objects that are found.</returns>
-        public List<Match> SelectAllMatches()
-        {
-            return QueryMatches("SELECT * FROM matches;");
-        }
-
         /// <summary>Select n last matches from a team.</summary>
         /// <param name="n">Number of last matches to get.</param>
         /// <param name="team">Name of the team to be searched for.</param>
-        /// <returns>null when n is less than or equal to 0, a List of Match-objects on success.</returns>
-        public List<Match> SelectNLastFromTeam(int n, string team) 
-        { 
-
+        /// <returns>string query to get n last matches from a team, null if n is less than or equal to 0.</returns>
+        public string SelectNLastFromTeam(int n, string team)
+        {
             if (n <= 0)
                 return null;
 
-            string start = "SELECT * FROM matches WHERE ";
-            string end = String.Format("ORDER BY played_date DESC LIMIT {0};", n);
+            string end = String.Format("ORDER BY played_date DESC LIMIT {0}", n);
             string conditions = String.Format("hometeam='{0}' OR awayteam='{0}' ", team);
 
-            return QueryMatches(start + conditions + end);
-
+            return conditions + end;
         }
 
         /// <summary>Selects all found matches between parameter teams</summary>
         /// <param name="teams">A list of team names that are looked for.</param>
-        /// <returns>List of Match-objects on success, null if teams parameter is an empty list. </returns>
-        public List<Match> SelectBetweenTeams(List<string> teams)
+        /// <returns>string query for selecting matches between teams, if no teams provided, returns null.</returns>
+        public string SelectBetweenTeams(List<string> teams)
         {
             /*creates a query for for finding all matches that are played between teams in parameter list.
              Connects to database and makes the query. */
@@ -156,7 +144,6 @@ namespace Liiga
             if (teams.Count == 0)
                 return null;
 
-            string query = "SELECT * FROM matches WHERE ";
             string homequery = "(";
             string awayquery = "(";
 
@@ -172,26 +159,20 @@ namespace Liiga
                 }
             }
             homequery = homequery + ")";
-            awayquery = awayquery + ");";
-            query = query + homequery + " and " + awayquery;
-
-            return QueryMatches(query);
-
+            awayquery = awayquery + ") ";
+            return homequery + " and " + awayquery;
         }
 
-        /// <summary>Select all matches from spesified teams.</summary>
+        /// <summary>Select all matches from specified teams.</summary>
         /// <param name="teams">Names of the teams whose matches are searched for.</param>
-        /// <returns>A list of matches on success, null if no teams are given as parameter.</returns>
-        public List<Match> SelectFromTeams(List<string> teams)
-        { 
-
+        /// <returns>string query to select matches from teams.</returns>
+        public string SelectFromTeams(List<string> teams)
+        {
             /*creates a query for for finding all matches with the teams in parameter list.
              Connects to database and makes the query. */
-
             if (teams.Count == 0)
                 return null;
 
-            string query = "SELECT * FROM matches WHERE ";
             string homequery = "(";
             string awayquery = "(";
 
@@ -207,19 +188,20 @@ namespace Liiga
                 }
             }
             homequery = homequery + ")";
-            awayquery = awayquery + ");";
-            query = query + homequery + " or " + awayquery;
-
-            return QueryMatches(query);
+            awayquery = awayquery + ") ";
+            return homequery + " or " + awayquery;
         }
 
         /// <summary>Selects all matches from a certain season</summary>
         /// <param name="seasons">List of seasons where matches are searched for.</param>
-        /// <returns>List of matches from parameter seasons.</returns>
+        /// <returns>string query for selecting matches in selected seasons. If no seasons
+        /// are provided, returns null.</returns>
         /// 
-        public List<Match> SelectFromSeasons(List<string> seasons)
+        public string SelectFromSeasons(List<string> seasons)
         {
-            string query = "SELECT * FROM matches WHERE ";
+            if (seasons.Count <= 0)
+                return null;
+            string query = "";
 
             for (int i = 0; i < seasons.Count; i++)
             {
@@ -229,20 +211,23 @@ namespace Liiga
                     query = query + "OR ";
             }
 
-            return QueryMatches(query + ";");
+            return query;
         }
 
         /// <summary>Selects matches between parameter teams from selected seasons.</summary>
         /// <param name="seasons">A list of all seasons where matches are searched for
         /// (format YY-YY).</param>
         /// <param name="teams">A list of team names whose games are searched for.</param>
-        /// <returns>A list of matches between the teams in the selected seasons.</returns>
-        public List<Match> SelectBetweenTeamsFromSeasons(List<string> teams, List<string> seasons)
+        /// <returns>Query string to select matches between teams from selected seasons. Returns null
+        /// if both parameters have length less than or equal to 0.</returns>
+        public string SelectBetweenTeamsFromSeasons(List<string> teams, List<string> seasons)
         {
             /* create a query selecting all matches between parameter teams
              * from the parameter seasons. */
 
-            string query = "SELECT * FROM matches WHERE ";
+            if (teams.Count <= 0 && seasons.Count <= 0)
+                return null;
+            string query = "";
 
             string homequery = "(";
             string awayquery = "(";
@@ -270,27 +255,29 @@ namespace Liiga
 
             homequery = homequery + ")";
             awayquery = awayquery + ")";
-            query = query + homequery + " and " + awayquery + seasonQuery + ");";
 
-            return QueryMatches(query);
+            if (teams.Count > 0)
+                query = query + homequery + " and " + awayquery; 
+            if (seasons.Count > 0)
+                query = query + seasonQuery + ") ";
+            return query;
         }
 
         /// <summary>Select all matches before or after (and on the same) day.</summary>
         /// <param name="date"> The first/last date included in the search.</param>
         /// <param name="after">Boolean which indicates whether or not function looks for matches
         /// after or before the date.</param>
-        /// <returns>A list of matches either before and on the set date, or after and
-        /// on the set date.</returns> 
+        /// <returns>string query to get matches before or after a specific date.</returns> 
         /// <exception cref="DateConversionError">Thrown when the date parameter has a
         /// format which cannot be converted into "yyyy-MM-dd".</exception>
-        public List<Match> SelectBeforeOrAfterDate(string date, bool after)
+        public string SelectBeforeOrAfterDate(string date, bool after)
         {
             /* Select all matches before or after (and on) a date. 
               * forms a query to select all matches before or after  (and the same) date. Date parameter is parsed into
              * correct format 'YYYY-MM-DD'. parsedDate variable is used to check if date is in approved format.
              */
             DateTime parsedDate;
-            string query = "SELECT * FROM matches WHERE ";
+            string query = "";
 
             if (DateTime.TryParse(date, out parsedDate))
             {
@@ -302,11 +289,11 @@ namespace Liiga
             }
 
             if (after)
-                query = query + String.Format("played_date >='{0}';", date);
+                query = query + String.Format("played_date >='{0}' ", date);
             else
-                query = query + String.Format("played_date <='{0}';", date);
+                query = query + String.Format("played_date <='{0}' ", date);
 
-            return QueryMatches(query);
+            return query;
 
         }
 
@@ -317,18 +304,20 @@ namespace Liiga
         /// <param name="date">Date which is set as the limit of the search. Must be 
         /// convertable to format "yyyy-MM-dd".</param>
         /// <param name="teams">A list of team names whose matches are searched for.</param>
-        /// <returns>A list of matches from selected teams in the selected timeframe.</returns>
+        /// <returns>query string to select matches before or after date from selected teams.</returns>
         /// <exception cref="DateConversionError">Thrown when date parameter cannot be converted into
         /// format "yyyy-MM-dd".</exception>
-        public List<Match> SelectBeforeOrAfterDate(List<string> teams, string date, bool after)
+        public string SelectBeforeOrAfterDate(List<string> teams, string date, bool after)
         {
-            /* Overload to select matches from spesific teams.
-             * 
+            /* Overload to select matches from specific teams.
              * forms a query to select all matches before or after  (and the same) date from all the teams given as a parameter. Date parameter is parsed into
              * correct format 'YYYY-MM-DD'. parsedDate variable is used to check if date is in approved format. */
 
+            if (teams.Count <= 0)
+                return null;
+
             DateTime parsedDate;
-            string query = "SELECT * FROM matches WHERE (";
+            string query = "(";
 
             if (DateTime.TryParse(date, out parsedDate))
             {
@@ -348,23 +337,20 @@ namespace Liiga
 
             }
             if (after)
-                query = query + String.Format(") AND played_date >='{0}';", date);
+                query = query + String.Format(") AND played_date >='{0}'", date);
             else
-                query = query + String.Format(") AND played_date <='{0}';", date);
+                query = query + String.Format(") AND played_date <='{0}'", date);
 
-            return QueryMatches(query);
-
+            return query;
         }
 
         /// <summary>Selects matches depending on wheter they went into overtime.</summary>
         /// <param name="ot">Boolean indicating whether search is for matches that went into
         /// overtime or didn't go to overtime.</param>
-        /// <returns>A list of Match objects that the query returned.</returns>
-        public List<Match> SelectWhereOvertime(bool ot)
+        /// <returns>query string for selecting matches where overtime is parameter ot.</returns>
+        public string SelectWhereOvertime(bool ot)
         {
-            string query = String.Format("SELECT * FROM matches WHERE overtime={0}", Convert.ToInt32(ot));
-
-            return QueryMatches(query);
+            return String.Format("overtime={0} ", Convert.ToInt32(ot));
         }
 
         /// <summary>Returns a list of matches where goal difference is equal to and
@@ -372,56 +358,53 @@ namespace Liiga
         /// <param name="gd">Specified goal difference.</param>
         /// <param name="isAtLeast"> Boolean indicating whether to look for
         /// games with a smaller or larger difference.</param>
-        /// <returns>A list of match objects that match the search parameters.</returns>
-        /// 
-        public List<Match> SelectWhereGD(int gd, bool isAtLeast)
+        /// <returns>string query for selecting matches with selected goal difference, null if no teams are given.</returns>
+        public string SelectWhereGD(int gd, bool isAtLeast)
         {
             string query = "";
 
-            if (isAtLeast)
-                query = String.Format("SELECT * FROM matches WHERE homescore >= (awayscore + {0}) OR awayscore >= (homescore + {0})", gd);
-            else
-                query = String.Format("SELECT * FROM matches WHERE homescore <= (awayscore + {0}) AND awayscore <= (homescore + {0})", gd);
+            if (gd < 0)
+                gd = 0;
 
-            return QueryMatches(query);
+            if (isAtLeast)
+                query = String.Format("homescore >= (awayscore + {0}) OR awayscore >= (homescore + {0}) ", gd);
+            else
+                query = String.Format("homescore <= (awayscore + {0}) AND awayscore <= (homescore + {0}) ", gd);
+
+            return query;
         }
 
         /// <summary>Selects matches from database where hometeam is one of the parameter teams.</summary>
         /// <param name="teams">List of team names that are searched for.</param>
-        /// <returns>List of Match-objects where hometeam was in the teams-list, null if
-        /// no teams were given in the parameter list.</returns>
+        /// <returns>string query for selecting home matches from specific teams.</returns>
         /// 
-        public List<Match> SelectWhereHometeam(List<string> teams)
+        public string SelectWhereHometeam(List<string> teams)
         {
-
             if (teams.Count == 0)
                 return null;
 
-            string query = "SELECT * FROM matches where ";
+            string query = "";
 
-            for(int i = 0; i < teams.Count; i++)
+            for (int i = 0; i < teams.Count; i++)
             {
                 query = query + String.Format("hometeam='{0}' ", teams[i]);
                 if (i < (teams.Count - 1))
                     query = query + "OR ";
             }
 
-            query = query + ";";
-
-            return QueryMatches(query);
+            return query;
         }
 
         /// <summary>Selects matches from database where awayteam is one of the parameter teams.</summary>
         /// <param name="teams">List of team names that are searched for.</param>
-        /// <returns>List of Match-objects where awayteam was in the teams-list, null if
-        /// no teams were given in the parameter list.</returns>
+        /// <returns>query string to select away matches from selected teams, null if no teams are given.</returns>
         /// 
-        public List<Match> SelectWhereAwayteam(List<string> teams)
+        public string SelectWhereAwayteam(List<string> teams)
         {
             if (teams.Count == 0)
                 return null;
 
-            string query = "SELECT * FROM matches where ";
+            string query = "";
 
             for (int i = 0; i < teams.Count; i++)
             {
@@ -430,9 +413,17 @@ namespace Liiga
                     query = query + "OR ";
             }
 
-            query = query + ";";
+            return query;
+        }
 
-            return QueryMatches(query);
+        /// <summary> Select a list of playoff or regular season matches.</summary>
+        /// <param name="playoff">True indicates that function searches playoff matches, false
+        /// that search searches regular season games.</param>
+        /// <returns>query string for selecting matches with specific playoff parameter.</returns>
+        /// 
+        public string SelectWherePlayoff(bool playoff)
+        {
+            return String.Format("playoff={0} ", Convert.ToInt32(playoff));
         }
 
         /// <summary>Creates a list of match objects from query return data.</summary>
@@ -503,16 +494,6 @@ namespace Liiga
         }
 
 
-        /// <summary> Select a list of playoff or regular season matches.</summary>
-        /// <param name="playoff">True indicates that function searches playoff matches, false
-        /// that search searches regular season games.</param>
-        /// <returns>A list of matches that match the query.</returns>
-        /// 
-        public List<Match> SelectWherePlayoff(bool playoff)
-        {
-            return QueryMatches(String.Format("SELECT * FROM matches WHERE playoff={0};", Convert.ToInt32(playoff)));
-        }
-
         /// <summary>Creates a new row to matches table.</summary>
         /// <param name="home">Hometeam name.</param>
         /// <param name="away">Awayteam name.</param>
@@ -531,7 +512,7 @@ namespace Liiga
         {
             /* creates a new row to matches table. First checks if the match already exists in the database. */
             string select = String.Format("SELECT count(1) FROM matches WHERE hometeam='{0}' AND awayteam='{1}' AND played_date='{2}';"
-                ,home, away, date);
+                , home, away, date);
             int exists = 1;
             DateTime parsedDate;
 
@@ -551,7 +532,7 @@ namespace Liiga
             try
             {
                 SQLiteDataReader reader = command.ExecuteReader();
-            
+
                 while (reader.Read())
                 {
                     exists = Convert.ToInt32(reader.GetInt32(0));
@@ -577,73 +558,6 @@ namespace Liiga
             }
 
         }
-
-        /// <summary>Returns a list of matches which were included in at least one list.</summary>
-        /// <param name="matchLists">List of lists of Match-objects which are results of a query.</param>
-        /// <returns>A list of Match-objects on success, null if no Match-lists where given as parameter.</returns>
-        public List<Match> Union(List<List<Match>> matchLists)
-        {
-            /* Method returns a union of all the parameter list results. It can be used to 
-             * combine the results of more than one queries.
-             */
-            List<Match> result = new List<Match>();
-
-            if (matchLists.Count == 0)
-                return null;
-
-            if (matchLists.Count == 1)
-                return matchLists[0];
-
-            foreach (List<Match> list in matchLists)
-            {
-                foreach(Match m in list)
-                {
-                    if (!result.Contains(m))
-                        result.Add(m);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>Return a list of Match-objects which are included in each of the
-        /// parameter lists.</summary>
-        /// <param name="matchLists">List of lists containing Match-objects.</param>
-        /// <returns>A list of Match-objects on success. Returns null if no lists
-        /// were given as parameter.</returns>
-        public List<Match> Join(List<List<Match>> matchLists)
-        {
-            /* Method returns a join of all the parameter list results. It can be used to 
-             * combine the results of more than one queries. Method checks the first list
-             * against all other lists: If a match exists in all lists it is added to result list.
-             */
-
-            List<Match> result = new List<Match>();
-
-            if (matchLists.Count == 0)
-                return null;
-
-            if (matchLists.Count == 1)
-                return matchLists[0];
-
-            for (int i = 0; i < matchLists[0].Count; i++)
-            {
-                bool isInLists = true;
-                for (int j = 1; j < matchLists.Count; j++)
-                {
-                    bool isInList = false;
-                    
-                    if (matchLists[j].Contains(matchLists[0][i]))
-                        isInList = true;
-                    
-                    if (!isInList)                  
-                        isInLists = false;                                       
-                }
-                if (isInLists)
-                    result.Add(matchLists[0][i]);
-            }
-            return result;
-        }
-
     }
 }
+

@@ -76,11 +76,13 @@
   <ItemGroup>
     <Compile Include="src\Database.cs" />
     <Compile Include="src\DatabaseError.cs" />
+    <Compile Include="src\DatabaseRefactored.cs" />
     <Compile Include="src\DateConversionError.cs" />
     <Compile Include="src\Match.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test\Database_Match_Test.cs" />
+    <Compile Include="src\MatchQuery.cs" />
+    <Compile Include="test\Database_Refactored_tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

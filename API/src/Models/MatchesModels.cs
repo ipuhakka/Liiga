@@ -9,7 +9,7 @@ namespace API
     {
 
         /// <summary>
-        /// Performs queries based on the parameters, returns a list of matches that fit the query.
+        /// Performs a query based on the parameters, returns a list of matches that fit the query.
         /// </summary>
         /// <param name="between">When true, only matches between parameter teams are searched for.
         /// When teams has no items it is ignored.</param>
@@ -52,64 +52,63 @@ namespace API
                 if (teams.Count == 0)
                     teams = null;
 
-                List<List<Match>> join = new List<List<Match>>();
+                MatchQuery mq = new MatchQuery();
 
-                if (teams == null && seasons == null) //basequery
+                if (teams == null && seasons == null && goal_difference == null && gd_is_at_least == null && playoff == null && played_at_home == null && match_end_in_overtime == null) //basequery
                 {
-                    join.Add(db.SelectAllMatches());
+                    return db.QueryMatches(mq.getQueryString());
                 }
                 else if (teams == null && seasons != null)
                 {
-                    join.Add(db.SelectFromSeasons(seasons));
+                    mq.addSubQuery(db.SelectFromSeasons(seasons));
                 }
                 else if (teams != null && seasons == null && !between)
                 {
-                    join.Add(db.SelectFromTeams(teams));
+                    mq.addSubQuery(db.SelectFromTeams(teams));
                 }
                 else if (teams != null && seasons == null && between)
                 {
-                    join.Add(db.SelectBetweenTeams(teams));
+                    mq.addSubQuery(db.SelectBetweenTeams(teams));
                 }
                 else if (teams != null && seasons != null && between)
                 {
-                    join.Add(db.SelectBetweenTeamsFromSeasons(teams, seasons));
+                    mq.addSubQuery(db.SelectBetweenTeamsFromSeasons(teams, seasons));
                 }
                 else if (teams != null && seasons != null && !between)
                 {
-                    join.Add(db.SelectFromTeams(teams));
-                    join.Add(db.SelectFromSeasons(seasons));
+                    mq.addSubQuery(db.SelectFromTeams(teams));
+                    mq.addSubQuery(db.SelectFromSeasons(seasons));
                 } //basequery ends 
 
                 if (gd_is_at_least != null && goal_difference != null)
                 {
-                    join.Add(db.SelectWhereGD((int)goal_difference, (bool)gd_is_at_least));
+                    mq.addSubQuery(db.SelectWhereGD((int)goal_difference, (bool)gd_is_at_least));
                 }
 
                 if (playoff != null)
                 {
-                    join.Add(db.SelectWherePlayoff((bool)playoff));
+                    mq.addSubQuery(db.SelectWherePlayoff((bool)playoff));
                 }
 
                 if (played_at_home != null && teams != null)
                 {
                     if ((bool)played_at_home)
                     {
-                        join.Add(db.SelectWhereHometeam(teams));
+                        mq.addSubQuery(db.SelectWhereHometeam(teams));
                     }
                     if ((bool)!played_at_home)
                     {
-                        join.Add(db.SelectWhereAwayteam(teams));
+                        mq.addSubQuery(db.SelectWhereAwayteam(teams));
                     }
                 }
                 if (match_end_in_overtime != null)
                 {
-                    join.Add(db.SelectWhereOvertime((bool)match_end_in_overtime));
+                    mq.addSubQuery(db.SelectWhereOvertime((bool)match_end_in_overtime));
                 }
-                return db.Join(join);
+                return db.QueryMatches(mq.getQueryString());
             }
             else
                 throw new APIError("File " + path + " not found");
         }
-
     }
 }
