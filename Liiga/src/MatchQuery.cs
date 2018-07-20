@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Liiga
 {
@@ -32,7 +28,7 @@ namespace Liiga
         /// <param name="sub"></param>
         public void addSubQuery(string sub)
         {
-            if (sub != null)
+            if (!string.IsNullOrEmpty(sub))
                 sub_queries.Add(sub);
         }
 
@@ -53,6 +49,15 @@ namespace Liiga
             }
 
             return query + ";";
+        }
+
+        /// <summary>
+        /// Returns the list of subQueries.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> get_sub_queries()
+        {
+            return sub_queries;
         }
     }
 }

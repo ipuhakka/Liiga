@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
+using Liiga;
 
-namespace Liiga
+namespace LiigaTest
 {
     [TestFixture]
     public class Database_tests
@@ -13,7 +14,7 @@ namespace Liiga
         public void setUpTests()
         {
             /* setUp class sets Database variables and sets the path to the correct directory. */
-            Directory.SetCurrentDirectory(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\"));
+            Directory.SetCurrentDirectory(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\Liiga"));
             db.CreateDatabase(@"db\liigaTest.db");
             db.setConnectionString("Data Source=db\\liigaTest.db; Version=3;");
             db.set_db_schema("db\\liiga_schema_dump.sql");
@@ -276,7 +277,7 @@ namespace Liiga
                     Should return 2 matches.
                3. Test with list of Kärpät, Kärpät, TPS after date '2017-03-25. 
                     Should return 3 matches.'*/
-            List<string> teams = new List<string>() { "Kärpät", "Kärpät"};
+            List<string> teams = new List<string>() { "Kärpät", "Kärpät" };
             MatchQuery mq = new MatchQuery();
             mq.addSubQuery(db.SelectBeforeOrAfterDate(teams, "2017/03/25", true));
             List<Match> rows = db.QueryMatches(mq.getQueryString());
