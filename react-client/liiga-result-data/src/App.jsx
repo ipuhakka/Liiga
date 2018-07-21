@@ -176,6 +176,9 @@ class App extends Component {
 					this.setState({ //this done later than matchData because of necessary state handling
 						tableData: this.LeagueTable.sortOfficialTable(this.LeagueTable.createLeagueTable())
 					});
+					
+					if (JSON.parse(xmlHttp.responseText).length === 0)
+						window.alert("Query returned 0 matches");
 				}
 				if (xmlHttp.readyState === 4 && xmlHttp.status !== 200) {
 					window.alert("could not retrieve teams data");

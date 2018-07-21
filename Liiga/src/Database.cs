@@ -160,7 +160,7 @@ namespace Liiga
             }
             homequery = homequery + ")";
             awayquery = awayquery + ") ";
-            return homequery + " and " + awayquery;
+            return "(" + homequery + " and " + awayquery + ") ";
         }
 
         /// <summary>Select all matches from specified teams.</summary>
@@ -189,7 +189,7 @@ namespace Liiga
             }
             homequery = homequery + ")";
             awayquery = awayquery + ") ";
-            return homequery + " or " + awayquery;
+            return "(" + homequery + " or " + awayquery + ") ";
         }
 
         /// <summary>Selects all matches from a certain season</summary>
@@ -211,7 +211,7 @@ namespace Liiga
                     query = query + "OR ";
             }
 
-            return query;
+            return "(" + query + ") ";
         }
 
         /// <summary>Selects matches between parameter teams from selected seasons.</summary>
@@ -260,7 +260,7 @@ namespace Liiga
                 query = query + homequery + " and " + awayquery; 
             if (seasons.Count > 0)
                 query = query + seasonQuery + ") ";
-            return query;
+            return "(" + query + ") ";
         }
 
         /// <summary>Select all matches before or after (and on the same) day.</summary>
@@ -341,7 +341,7 @@ namespace Liiga
             else
                 query = query + String.Format(") AND played_date <='{0}'", date);
 
-            return query;
+            return "( " + query + ") ";
         }
 
         /// <summary>Selects matches depending on wheter they went into overtime.</summary>
@@ -392,7 +392,7 @@ namespace Liiga
                     query = query + "OR ";
             }
 
-            return query;
+            return "(" + query + ") ";
         }
 
         /// <summary>Selects matches from database where awayteam is one of the parameter teams.</summary>
@@ -413,7 +413,7 @@ namespace Liiga
                     query = query + "OR ";
             }
 
-            return query;
+            return "(" + query + ") ";
         }
 
         /// <summary> Select a list of playoff or regular season matches.</summary>

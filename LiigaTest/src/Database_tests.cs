@@ -455,5 +455,18 @@ namespace LiigaTest
             List<Match> matches = db.QueryMatches(mq.getQueryString());
             Assert.AreEqual(0, matches.Count);
         }
+
+        [Test]
+        public void test_QueryMatches_FromTeams_FromSeasons_playoff()
+        {
+            MatchQuery mq = new MatchQuery();
+            mq.addSubQuery(db.SelectFromTeams(new List<string>() { "Kärpät", "Tappara"}));
+            mq.addSubQuery(db.SelectFromSeasons(new List<string>() { "17-18" }));
+            mq.addSubQuery(db.SelectWherePlayoff(true));
+            System.Console.WriteLine(mq.getQueryString());
+
+            List<Match> matches = db.QueryMatches(mq.getQueryString());
+            Assert.AreEqual(2, matches.Count);
+        }
     }
 }
