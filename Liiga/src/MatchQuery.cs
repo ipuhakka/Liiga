@@ -38,7 +38,10 @@ namespace Liiga
         /// <returns></returns>
         public string getQueryString()
         {
-            string query = "SELECT * FROM matches WHERE ";
+            string query = "SELECT * FROM matches ";
+
+            if (sub_queries.Count > 0)
+                query = query + "WHERE ";
 
             for (int i = 0; i < sub_queries.Count; i++)
             {

@@ -56,5 +56,13 @@ namespace LiigaTest
             string expected = "SELECT * FROM matches WHERE test AND test 2 AND test 3 ;";
             Assert.AreEqual(expected, mq.getQueryString());
         }
+
+        [Test]
+        public void test_GetQueryString_emptySearch()
+        {
+            MatchQuery mq = new MatchQuery();
+
+            Assert.AreEqual("SELECT * FROM matches ;", mq.getQueryString());
+        }
     }
 }

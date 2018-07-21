@@ -436,5 +436,12 @@ namespace LiigaTest
         {
             Assert.AreEqual(10, db.GetTeamnames().Count);
         }
+
+        [Test]
+        public void test_SelectAllMatches()
+        {
+            MatchQuery mq = new MatchQuery();
+            Assert.DoesNotThrow(() => db.QueryMatches(mq.getQueryString()));
+        }
     }
 }
