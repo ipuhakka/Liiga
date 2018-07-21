@@ -424,5 +424,17 @@ namespace LiigaTest
             List<Match> regularSeason = db.QueryMatches(mq.getQueryString());
             Assert.AreEqual(13, regularSeason.Count);
         }
+
+        [Test]
+        public void test_GetSeasons()
+        {
+            Assert.AreEqual(2, db.GetSeasons().Count);
+        }
+
+        [Test]
+        public void test_GetTeamNames()
+        {
+            Assert.AreEqual(10, db.GetTeamnames().Count);
+        }
     }
 }

@@ -52,7 +52,8 @@ namespace LiigaTest
             MatchQuery mq = new MatchQuery();
             mq.addSubQuery("test ");
             mq.addSubQuery("test 2 ");
-            string expected = "SELECT * FROM matches WHERE test AND test 2 ;";
+            mq.addSubQuery("test 3 ");
+            string expected = "SELECT * FROM matches WHERE test AND test 2 AND test 3 ;";
             Assert.AreEqual(expected, mq.getQueryString());
         }
     }
