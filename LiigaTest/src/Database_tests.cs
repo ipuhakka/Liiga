@@ -443,5 +443,17 @@ namespace LiigaTest
             MatchQuery mq = new MatchQuery();
             Assert.DoesNotThrow(() => db.QueryMatches(mq.getQueryString()));
         }
+
+        [Test]
+        public void test_QueryMatches_GD_atLeast2_overtime()
+        {
+            MatchQuery mq = new MatchQuery();
+            mq.addSubQuery(db.SelectWhereGD(2, true));
+            mq.addSubQuery(db.SelectWhereOvertime(true));
+            System.Console.WriteLine(mq.getQueryString());
+
+            List<Match> matches = db.QueryMatches(mq.getQueryString());
+            Assert.AreEqual(0, matches.Count);
+        }
     }
 }

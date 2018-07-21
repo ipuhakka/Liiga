@@ -367,9 +367,9 @@ namespace Liiga
                 gd = 0;
 
             if (isAtLeast)
-                query = String.Format("homescore >= (awayscore + {0}) OR awayscore >= (homescore + {0}) ", gd);
+                query = String.Format("(homescore >= (awayscore + {0}) OR awayscore >= (homescore + {0})) ", gd);
             else
-                query = String.Format("homescore <= (awayscore + {0}) AND awayscore <= (homescore + {0}) ", gd);
+                query = String.Format("(homescore <= (awayscore + {0}) AND awayscore <= (homescore + {0})) ", gd);
 
             return query;
         }
