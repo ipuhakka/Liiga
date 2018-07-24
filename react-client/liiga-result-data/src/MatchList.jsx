@@ -11,8 +11,8 @@ class MatchList extends Component{
 		this.loadMoreMatches = this.loadMoreMatches.bind(this);
 					
 		this.state={
-			lastSortedBy: null,
-			byHighest: true, 
+			lastSortedBy: "date",
+			byHighest: false,
 			currentIndex: 0
 		}
 	}
@@ -70,7 +70,7 @@ class MatchList extends Component{
 		if (this.props.data === null)
 			return;
 	
-		if (param === this.state.lastSortedParam && !this.state.byHighest){
+		if (param === this.state.lastSortedBy && !this.state.byHighest){
 			if (param === "date")
 				this.props.onUpdate(Sort.sortByOldestDate(this.props.data, param));	
 			else if (param === 'hometeam' || param === 'awayteam')
@@ -92,7 +92,7 @@ class MatchList extends Component{
 		}
 
 		this.setState({
-			lastSortedParam: param,
+			lastSortedBy: param,
 			currentIndex: 0
 		});
 	}

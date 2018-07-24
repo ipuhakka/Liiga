@@ -17,7 +17,7 @@ class LeagueTable extends Component{
 		this.otLoss0points = this.otLoss0points.bind(this);
 		
 		this.state={
-			lastSortedBy: null,
+			lastSortedBy: 'points',
 			byHighest: true
 		}
 	}
@@ -80,7 +80,7 @@ class LeagueTable extends Component{
 			this.props.onUpdate(this.sortOfficialTable(this.props.tableData));
 		
 		else {
-			if (param === this.state.lastSortedParam && !this.state.byHighest){
+			if (param === this.state.lastSortedBy && !this.state.byHighest){
 				if (param === "name")
 					this.props.onUpdate(Sort.sortAlphabeticallyBackwards(this.props.tableData, param));
 				else 
@@ -99,7 +99,7 @@ class LeagueTable extends Component{
 
 		}
 		this.setState({
-			lastSortedParam: param
+			lastSortedBy: param
 		});
 	}
 	
