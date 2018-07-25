@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/lib/Grid';
 import Form from 'react-bootstrap/lib/Form';
 import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import MatchList from './MatchList.jsx';
 import ListSelect from './ListSelect.jsx';
@@ -35,6 +36,8 @@ class App extends Component {
 		this.getTeams = this.getTeams.bind(this);
 		this.getMatches = this.getMatches.bind(this);
 		this.handleGDChange = this.handleGDChange.bind(this);
+		this.handleStartDateChange = this.handleStartDateChange.bind(this);
+		this.handleEndDateChange = this.handleEndDateChange.bind(this);
 		this.createCORSRequest = this.createCORSRequest.bind(this);
 		this.alphabeticalSort = this.alphabeticalSort.bind(this);
 		this.search = this.search.bind(this);
@@ -48,6 +51,8 @@ class App extends Component {
 			gd_disabled: true,
 			end_in_overtime: null,
 			between: false,
+			startDate: "",
+			endDate: "",
 			matchData: null,
 			tableData: null
 		}
@@ -101,6 +106,29 @@ class App extends Component {
 							</FormControl>
 						</Form>
 						<SelectOption onUpdate={this.updateMatchEnd} texts={["All matches", "Ended in overtime", "Ended in regular time"]}></SelectOption>
+						<Form>
+							<FormGroup>
+							<ControlLabel>
+								Start date
+							</ControlLabel>
+							{' '}
+							<FormControl
+								value={this.state.startDate}
+								placeholder="dd-mm-yyyy"
+								onChange={this.handleStartDateChange}>
+							</FormControl>
+							{' '}
+							<ControlLabel>
+								End date
+							</ControlLabel>
+							{' '}
+							<FormControl
+								value={this.state.endDate}
+								placeholder="dd-mm-yyyy"
+								onChange={this.handleEndDateChange}>
+							</FormControl>
+							</FormGroup>
+						</Form>
 						<Button onClick={this.search} bsStyle="success" className="searchButton">Search</Button>
 					</Col>
 				</Row>
@@ -132,12 +160,12 @@ class App extends Component {
 				seasons.push(this.state.seasons[i]);
 		}
 		
-		var url = this.createMatchesQuery(this.state.between, this.state.goal_difference, this.state.gd_over, this.state.playoff, this.state.homeMatches, this.state.end_in_overtime, teams, seasons);
+		var url = this.createMatchesQuery(this.state.between, this.state.goal_difference, this.state.gd_over, this.state.playoff, this.state.homeMatches, this.state.end_in_overtime, teams, seasons, this.state.startDate, this.state.endDate);
 		this.getMatches(url);
 	}
 	
 	/*Creates url which is used to make the query for matches.*/
-	createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons){
+	createMatchesQuery(between, goal_difference, gd_is_at_least, playoff, played_at_home, match_end_in_overtime, teams, seasons, startDate, endDate){
 	
 		var url = BASE_URL + "api/matches?between=" + String(between);
 	
@@ -149,7 +177,11 @@ class App extends Component {
 			url = url + "&played_at_home=" + String(played_at_home);
 		if (match_end_in_overtime != null)
 			url = url + "&match_end_in_overtime=" + String(match_end_in_overtime);
-
+		if (startDate !== "")
+			url = url + "&startDate=" + startDate;
+		if (endDate !== "")
+			url = url + "&endDate=" + endDate;
+		
 		for (var i = 0; i < teams.length; i++){
 			url = url + "&teams=" + teams[i];
 		}
@@ -180,9 +212,12 @@ class App extends Component {
 						tableData: this.LeagueTable.sortOfficialTable(this.LeagueTable.createLeagueTable())
 					});
 				}
-				if (xmlHttp.readyState === 4 && xmlHttp.status !== 200) {
+				if (xmlHttp.readyState === 4 && xmlHttp.status !== 200 && xmlHttp.status !== 400) {
 					window.alert("could not retrieve match data");
 					console.log("errormessage: " + xmlHttp.responseText);
+				}
+				if (xmlHttp.readyState === 4 && xmlHttp.status === 400){
+					window.alert(xmlHttp.responseText);
 				}
         });
         xmlHttp.send();
@@ -371,6 +406,18 @@ class App extends Component {
 	handleGDChange(e){
 		this.setState({
 			goal_difference: e.target.value
+		});
+	}
+	
+	handleStartDateChange(e){
+		this.setState({
+			startDate: e.target.value
+		});
+	}
+	
+	handleEndDateChange(e){
+		this.setState({
+			endDate: e.target.value
 		});
 	}
 }

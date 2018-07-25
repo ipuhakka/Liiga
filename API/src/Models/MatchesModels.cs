@@ -28,6 +28,8 @@ namespace API
         /// matches are searched from all the seasons.</param>
         /// <param name="teams">List of team names whose matches are searched for. When no teams are given
         /// all teams are considered in the search.</param>
+        /// <param name="endDate">Only matches earlier than this date are searched for.</param>
+        /// <param name="startDate">Only matches later than this date are searched.</param>
         /// <returns>A list of matches that  where in all of the queries.</returns>
         public List<Match> getmatches(List<string> seasons, List<string> teams, string startDate = null, string endDate = null, bool between = false, int? goal_difference = null, bool? gd_is_at_least = null, bool? playoff = null, bool? played_at_home = null, bool? match_end_in_overtime = null)
         {
