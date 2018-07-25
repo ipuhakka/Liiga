@@ -285,7 +285,7 @@ namespace Liiga
             }
             else
             {
-                throw new DateConversionError();
+                throw new DateConversionError(date);
             }
 
             if (after)
@@ -325,7 +325,7 @@ namespace Liiga
             }
             else
             {
-                throw new DateConversionError();
+                throw new DateConversionError(date);
             }
 
             for (int i = 0; i < teams.Count; i++)
@@ -522,7 +522,7 @@ namespace Liiga
             }
             else
             {
-                throw new DateConversionError();
+                throw new DateConversionError(date);
             }
 
             SQLiteConnection con = new SQLiteConnection(connectionString);
