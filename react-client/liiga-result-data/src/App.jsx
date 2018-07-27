@@ -36,10 +36,8 @@ class App extends Component {
 		this.getTeams = this.getTeams.bind(this);
 		this.getMatches = this.getMatches.bind(this);
 		this.handleGDChange = this.handleGDChange.bind(this);
-		this.handleStartDateChange = this.handleStartDateChange.bind(this);
-		this.handleEndDateChange = this.handleEndDateChange.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
 		this.createCORSRequest = this.createCORSRequest.bind(this);
-		this.alphabeticalSort = this.alphabeticalSort.bind(this);
 		this.search = this.search.bind(this);
 		this.createMatchesQuery = this.createMatchesQuery.bind(this);
 		
@@ -115,7 +113,7 @@ class App extends Component {
 							<FormControl
 								value={this.state.startDate}
 								placeholder="dd-mm-yyyy"
-								onChange={this.handleStartDateChange}>
+								onChange={this.handleDateChange.bind(this, 'start')}>
 							</FormControl>
 							{' '}
 							<ControlLabel>
@@ -125,7 +123,7 @@ class App extends Component {
 							<FormControl
 								value={this.state.endDate}
 								placeholder="dd-mm-yyyy"
-								onChange={this.handleEndDateChange}>
+								onChange={this.handleDateChange.bind(this, 'end')}>
 							</FormControl>
 							</FormGroup>
 						</Form>
@@ -235,7 +233,7 @@ class App extends Component {
 
 			xmlHttp.onreadystatechange =( () => {
 				if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-					var data = this.alphabeticalSort(JSON.parse(xmlHttp.responseText));
+					var data = Sort.alphabeticalSort(JSON.parse(xmlHttp.responseText));
 					var selected = [];
 					for (var i = 0; i < data.length; i++)
 						selected.push(false);
@@ -265,7 +263,7 @@ class App extends Component {
 
 			xmlHttp.onreadystatechange =( () => {
 				if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-					var data = this.alphabeticalSort(JSON.parse(xmlHttp.responseText));
+					var data = Sort.alphabeticalSort(JSON.parse(xmlHttp.responseText));
 					var selected = [];
 					for (var i = 0; i < data.length; i++)
 						selected.push(false);
@@ -331,77 +329,69 @@ class App extends Component {
   null = not a search criteria.
   true = only games from regular season are searched.
   false = only playoff matches are searched.*/
-  updateMatchType(value){
-	  this.setState({
-		  playoff: value
-	  });
-  }
+    updateMatchType(value){
+		this.setState({
+			playoff: value
+		});
+	}
   
   /*sets the value for homeGames attribute. possible values: null, true, false.
   null = all venues are searched. 
   true = only home matches are searced.
   false = only away matches are searched.
   */
-  updateMatchVenue(value){
-	  this.setState({
-		  homeMatches: value
-	  });
-  }
+	updateMatchVenue(value){
+		this.setState({
+			homeMatches: value
+		});
+	}
   
   /*Updates status of gd_over selector. Null = all matches are returned, true = games with goal difference over x are selected, false = games with
   goal difference less than x are selected.*/
-  updateGDSelector(value){
-	  var disableGD = true;
-	  if (value != null)
-		  disableGD = false;
+	updateGDSelector(value){
+		var disableGD = true;
+		if (value != null)
+			disableGD = false;
 	  
-	  this.setState({
-		  gd_over: value,
-		  gd_disabled: disableGD
-	  });
-  }
+		this.setState({
+			gd_over: value,
+			gd_disabled: disableGD
+		});
+	}
   
   /*sets the value for end_in_overtime. 
   null = not a search criteria,
   true = serch matches that ended in overtime,
   false = search matches that ended in regular time.*/
-  updateMatchEnd(value){
-	  this.setState({
-		  end_in_overtime: value
-	  });
-  }
+	updateMatchEnd(value){
+		this.setState({
+			end_in_overtime: value
+		});
+	}
   
   /*updates the between search parameter. Since SelectOption returns null when from is selected, this has to be interpreted as false value.*/
-  updateMatchesBetween(value){
-	  var between = true;
-	  if (value === null)
-		  between = false;
+	updateMatchesBetween(value){
+		var between = true;
+		if (value === null)
+			between = false;
 	  
-	  this.setState({
-		  between: between
-	  });
-  }
+		this.setState({
+			between: between
+		});
+	}
   
-  updateLeagueTableState(data){
-	  this.setState({
-		  tableData: data
-	  });
-  }
+	updateLeagueTableState(data){
+		this.setState({
+			tableData: data
+		});
+	}
   
-  updateMatchData(data){
-	  this.setState({
-		  matchData: data
-	  });
-  }
-  
-  alphabeticalSort(data){
-	return data.sort(function(a, b){
-    if(a < b) return -1;
-    if(a > b) return 1;
-    return 0;
-	})
-  }
-  
+	updateMatchData(data){
+		this.setState({
+			matchData: data
+		});
+	}
+
   	/*sets the state for goal_difference on user changing the value.*/
 	handleGDChange(e){
 		this.setState({
@@ -409,16 +399,17 @@ class App extends Component {
 		});
 	}
 	
-	handleStartDateChange(e){
-		this.setState({
-			startDate: e.target.value
-		});
-	}
-	
-	handleEndDateChange(e){
-		this.setState({
-			endDate: e.target.value
-		});
+	handleDateChange(param, e){
+		if (param === "start"){
+			this.setState({
+				startDate: e.target.value
+			});
+		}
+		else if(param === "end"){
+			this.setState({
+				endDate: e.target.value
+			});
+		}
 	}
 }
 
