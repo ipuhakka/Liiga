@@ -41,6 +41,15 @@
 	width: 30%;
 }
 
+.noPadding{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.rightPadding{
+	padding-left: 0 !important;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }

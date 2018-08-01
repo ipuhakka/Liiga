@@ -80,15 +80,15 @@ class App extends Component {
 			</header>
 			<Grid>
 				<Row className="show-grid">
-					<Col className="col-md-3 col-xs-6">
+					<Col className="col-md-3 col-xs-6 noPadding">
 						<div className="list-div">
 							<ListSelect itemState={this.state.teamSelected} onUpdate={this.clickedTeam} items={this.state.teams}></ListSelect>
 						</div>
 					</Col>
-					<Col className="col-md-3 col-xs-6">
+					<Col className="col-md-3 col-xs-6 rightPadding">
 							<ListSelect itemState={this.state.seasonSelected} onUpdate={this.clickedSeason} items={this.state.seasons}></ListSelect>
 					</Col>
-					<Col className="col-md-6 col-xs-12">
+					<Col className="col-md-6 col-xs-12 noPadding">
 						<SelectOption onUpdate={this.updateMatchesBetween} texts={["From teams", "Between teams"]}></SelectOption>
 						<SelectOption onUpdate={this.updateMatchType} texts={["All matches", "Playoff", "Regular season"]}></SelectOption>
 						<SelectOption onUpdate={this.updateMatchVenue} texts={["All venues", "Home", "Away"]}></SelectOption>
@@ -131,10 +131,10 @@ class App extends Component {
 					</Col>
 				</Row>
 				<Row className="show-grid">
-					<Col className="col-md-6 col-xs-12">
+					<Col className="col-md-6 col-xs-12 rightPadding">
 						<LeagueTable ref={instance => {this.LeagueTable = instance; }} onUpdate={this.updateLeagueTableState} onlyHomeMatches={this.state.homeMatches} matchData={this.state.matchData} tableData={this.state.tableData}></LeagueTable>
 					</Col>
-					<Col className="col-md-6 col-xs-12">
+					<Col className="col-md-6 col-xs-12 noPadding">
 						<MatchList onUpdate={this.updateMatchData} data={this.state.matchData}></MatchList>
 					</Col>
 				</Row>
