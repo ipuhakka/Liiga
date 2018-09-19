@@ -114,7 +114,7 @@ class LeagueTable extends Component{
 			var goal_difference = (b['goals'] - b['against']) - (a['goals'] - a['against']);		
 			if (goal_difference !== 0)
 				return goal_difference;	
-			var scored = b['scored'] - a['scored'];
+			var scored = b['goals'] - a['goals'];
 				return scored;		
 		});
 	}
